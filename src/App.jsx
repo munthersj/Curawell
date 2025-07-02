@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-
+import AppRoutes from "./routes/AppRoutes";
 function App() {
   const [count, setCount] = useState(0);
 
-  return <div className=""></div>;
+  return <AppRoutes />;
 }
 
 export default App;
