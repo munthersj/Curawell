@@ -26,20 +26,20 @@ export default function BasicDeatails() {
                 <input
                   type="radio"
                   name="option"
-                  value="Male"
+                  value="male"
                   className="hidden w-full"
-                  checked={content.gender === "Male"}
-                  onChange={() => content.setGender("Male")}
+                  checked={content.gender === "male"}
+                  onChange={() => content.setGender("male")}
                 />
                 <div
                   className={` w-5 h-5 transition duration-300 rounded-2xl border-2 flex items-center justify-center 
             ${
-              content.gender === "Male"
+              content.gender === "male"
                 ? "bg-curawell border-curawell"
                 : "border-gray-400"
             }`}
                 >
-                  {content.gender === "Male" && (
+                  {content.gender === "male" && (
                     <svg
                       className="w-3 h-3 text-white"
                       fill="none"
@@ -62,20 +62,20 @@ export default function BasicDeatails() {
                 <input
                   type="radio"
                   name="option"
-                  value="Female"
+                  value="female"
                   className="hidden w-full  "
-                  checked={content.gender === "Female"}
-                  onChange={() => content.setGender("Female")}
+                  checked={content.gender === "female"}
+                  onChange={() => content.setGender("female")}
                 />
                 <div
                   className={`w-5 h-5  transition duration-300 rounded-2xl border-2 flex items-center justify-center 
             ${
-              content.gender === "Female"
+              content.gender === "female"
                 ? "bg-curawell border-curawell"
                 : "border-gray-400"
             }`}
                 >
-                  {content.gender === "Female" && (
+                  {content.gender === "female" && (
                     <svg
                       className="w-3 h-3 text-white"
                       fill="none"

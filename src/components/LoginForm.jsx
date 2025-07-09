@@ -6,10 +6,13 @@ import LoginInputs from "./miniComponents/LoignInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/loginSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { CircleX } from "lucide-react";
 export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loginData, setloginData, setErrors, errors } = useLoginForm();
+
   const { loading, error } = useSelector((state) => state.login);
 
   const validate = () => {
@@ -17,13 +20,17 @@ export default function LoginForm() {
     let newErrors = { email: "", password: "" };
 
     const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailRegex.test(loginData.Email)) {
-      newErrors.email = "Please enter a valid email address";
-      valid = false;
+    const phoneRegex = /^09\d{8}$/;
+    if (!emailRegex.test(loginData.login)) {
+      if (phoneRegex.test(loginData.login)) {
+        valid = true;
+      } else {
+        newErrors.email = "Please enter a valid Credit";
+        valid = false;
+      }
     }
 
-    if (loginData.Password.length < 8) {
+    if (loginData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
       valid = false;
     }
@@ -33,72 +40,131 @@ export default function LoginForm() {
     return valid;
   };
 
-  function handelSubmit(e) {
+  async function handelSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
-    dispatch(loginUser(loginData));
+
+    try {
+      const result = await dispatch(loginUser(loginData)).unwrap(); // ✅ يجلب البيانات مباشرة من thunk
+      toast.custom((t) => (
+        <div className="flex items-center gap-3 bg-green-50 border-l-4 border-curawell text-curawell p-4 rounded-md shadow-md">
+          {/* <span className="font-bold"></span> */}
+          <span className="ml-2 font-bold font-cairo">
+            Succesfully logged in
+          </span>
+          <button
+            onClick={() => toast.dismiss(t)}
+            className="ml-auto text-curawell hover:text-black font-bold cursor-pointer"
+          >
+            <CircleX className="" />
+          </button>
+        </div>
+      ));
+      // navigate("/dashboard");
+    } catch (err) {
+      // ✅ نأخذ الخطأ مباشرة من ردّ الـ thunk
+      toast.custom((t) => (
+        <div className="flex items-center gap-3 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
+          <span className="font-bold">
+            <CircleX />
+          </span>
+          <span className="ml-2">
+            {err?.message == "Request failed with status code 401"
+              ? "Invalid credentials"
+              : "Somthing Went Wrong"}
+          </span>
+          <button
+            onClick={() => toast.dismiss(t)}
+            className="ml-auto text-gray-500 hover:text-black font-bold"
+          >
+            ×
+          </button>
+        </div>
+      ));
+    }
   }
   return (
     /***MAIN CONTAINER***/
-    <div className="md:flex md:flex-row md:h-screen  w-screen justify-center items-center ">
-      {/***IMG CONTAINER***/}
-      <div className="bg-gray-300 md:h-screen md:w-3/5 p-0  hidden md:block  ">
+    <div className="flex flex-col md:flex-row h-screen w-screen overflow-hidden">
+      {/* IMG CONTAINER */}
+      <div className="hidden md:block md:w-3/5 h-full">
         <img
-          className="md:h-screen w-screen object-cover "
           src="src/assets/login.png"
+          alt="login"
+          className="w-full h-full object-cover"
         />
       </div>
-      {/***IMG CONTAINER***/}
 
-      {/***LOGIN FORM CONTAINER***/}
-      <div className=" bg-white h-screen md:w-2/5">
-        <div className=" flex flex-col m-11 md:m-16">
-          <h1 className="text-curawell font-bold font-cairo text-4xl mb-6 ">
-            Welcome!
-          </h1>
-          <form>
-            {LoginInputs({ loginData, errors, setloginData })}
-            <div className="flex ml-3">
-              <h4 className="text-xs font-bold font-cairo mt-2 text-black">
-                I don't have an account yet,
+      {/* LOGIN FORM CONTAINER */}
+      <div className="w-full md:w-2/5 bg-white flex items-center justify-center">
+        <div className="w-full h-full max-h-screen overflow-y-auto px-6 sm:px-10 md:px-12 lg:px-16">
+          <div className="min-h-screen flex flex-col justify-center py-8">
+            <h1 className="text-curawell font-bold font-cairo text-3xl md:text-4xl mb-6 text-center md:text-left">
+              Welcome!
+            </h1>
+
+            <form className="space-y-4" onSubmit={handelSubmit}>
+              {LoginInputs({ loginData, errors, setloginData })}
+
+              <div className="flex justify-between flex-wrap text-xs font-cairo">
+                <div className="flex">
+                  <span className=" text-black font-cairo font-bold">
+                    I don't have an account yet,
+                  </span>
+                  <button
+                    type="button"
+                    className="ml-1  text-curawell underline font-cairo font-bold"
+                    onClick={() => navigate("/register")}
+                  >
+                    SignUp
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  className=" text-curawell underline font-cairo font-bold"
+                  onClick={() => navigate("/resetPassword")}
+                >
+                  Forget my password
+                </button>
+              </div>
+
+              <hr className="mt-6 border-gray-300" />
+
+              <div className="flex flex-col gap-4 items-center w-full mt-2">
+                <button
+                  type="submit"
+                  className="w-full bg-curawell rounded-lg py-3 text-white font-cairo hover:bg-curawell/80 transition-all"
+                >
+                  {loading ? (
+                    <span className="animate-pulse">Loading...</span>
+                  ) : (
+                    "Login"
+                  )}
+                </button>
+                <span className="text-xs font-bold text-black">
+                  or login via
+                </span>
+                <button
+                  type="button"
+                  className="w-full bg-curawell rounded-lg py-3 text-white font-cairo hover:bg-curawell/80 transition-all"
+                >
+                  Google
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-6">
+              <h4 className="font-bold font-cairo text-black">
+                For all questions:
               </h4>
-              <a
-                className="ml-1 text-xs font-bold font-cairo mt-2 text-curawell underline"
-                href=""
-              >
-                SignUp
-              </a>
+              <div className="flex justify-center items-center mt-3 p-2.5 bg-gray-100 rounded-md border border-gray-400 text-sm font-bold font-cairo text-black">
+                <PhoneCall className="text-curawell mr-3" />
+                +963 984939389
+              </div>
             </div>
-            <hr className="mt-9 border-gray-400" />
-            <div className="flex flex-col justify-center items-center mx-3.5">
-              <button
-                type="submit"
-                onClick={handelSubmit}
-                className=" w-full mt-2  bg-curawell rounded-lg p-3.5 text-white font-cairo hover:cursor-pointer hover:bg-curawell/80 transition-all"
-              >
-                {!loading ? "Login" : "glgeg"}
-              </button>
-              <h4 className="text-xs font-bold font-cairo mt-5 mb-3 text-black">
-                or login via
-              </h4>
-              <button
-                type="button"
-                className=" w-full bg-curawell rounded-lg p-3.5 text-white font-cairo hover:cursor-pointer hover:bg-curawell/80 transition-all duration-500"
-              >
-                Google
-              </button>
-            </div>
-          </form>
-          <h4 className="font-bold font-cairo mt-5 text-black">
-            For all questions:
-          </h4>
-          <div className="flex justify-center items-center mt-3 p-2.5 bg-grayc rounded-md border border-gray-400 text-lg font-bold font-cairo text-black">
-            <PhoneCall className="text-curawell mr-5" />
-            +963 984939389
           </div>
         </div>
       </div>
-      {/***LOGIN FORM CONTAINER***/}
     </div>
 
     /***MAIN CONTAINER***/

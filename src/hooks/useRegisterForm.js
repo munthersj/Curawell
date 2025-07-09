@@ -2,18 +2,26 @@ import { useState } from "react";
 
 export default function useRegisterForm() {
   const [gender, setGender] = useState();
+  const resetType = "phone";
   const [registerData, setregisterData] = useState({
-    FirstName: "",
-    LastName: "",
-    Email: "",
-    Password: "",
-    ConfirmPassword: "",
-    BirthDate: "",
-    CivilIdNumber: "",
-    Address: "",
-    PhoneNumber: "",
-    Gender: "",
-    ProfileIMG: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    birthday: "",
+    civil_id_number: "",
+    address: "",
+    phone: "",
+    gender: "",
+    // ProfileIMG: "",
+    chronic_diseases: [],
+    hereditary_diseases: [],
+    allergies: [],
+    blood_group: "A+",
+    weight: "75",
+    alternative_phone: "0988123456",
+    height: "180",
   });
   const [isVisibleVal, setisVisibleVal] = useState(false);
   const [currentStep, setCurrents] = useState(1);
@@ -52,5 +60,6 @@ export default function useRegisterForm() {
     setillInput,
     otp,
     setOtp,
+    resetType,
   };
 }

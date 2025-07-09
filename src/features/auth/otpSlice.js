@@ -3,15 +3,17 @@ import axios from "axios";
 
 export const sendOtp = createAsyncThunk(
   "auth/sendOtp",
-  async (emailOrPhone, thunkAPI) => {
+  async (data, thunkAPI) => {
+    console.log(data);
     try {
-      const response = await axios.post("https://api.example.com/send-otp", {
-        emailOrPhone,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/auth/send-code",
+        data
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to send OTP"
+        error.response?.data?.message || "OTP verification failed"
       );
     }
   }
@@ -19,12 +21,18 @@ export const sendOtp = createAsyncThunk(
 
 export const verifyOtp = createAsyncThunk(
   "auth/verifyOtp",
-  async ({ otp, emailOrPhone }, thunkAPI) => {
+  async (data, thunkAPI) => {
+    console.log(data);
     try {
-      const response = await axios.post("https://api.example.com/verify-otp", {
-        otp,
-        emailOrPhone,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/auth/verify-code",
+        data
+      );
+      if (data.type == "reset_password") {
+        console.log("done");
+        localStorage.setItem("resetToken", response.data.reset_token);
+      }
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -52,7 +60,6 @@ const otpSlice = createSlice({
       })
       .addCase(sendOtp.fulfilled, (state) => {
         state.loading = false;
-        state.otpSent = true;
       })
       .addCase(sendOtp.rejected, (state, action) => {
         state.loading = false;

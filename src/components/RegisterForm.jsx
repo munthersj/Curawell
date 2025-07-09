@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import useRegisterForm from "../hooks/useRegisterForm";
 import RegisterInputs from "./miniComponents/RegisterInputs";
@@ -5,13 +6,16 @@ import StepperControl from "./StepperControl";
 import Stepper from "./Stepper";
 import BasicDeatails from "./Register/BasicDeatails";
 import MedicalDeatails from "./Register/MedicalDeatails";
-import Opt from "./Register/Otp";
 import { registerUser } from "../features/auth/registerSlice";
 import { verifyOtp } from "../features/auth/otpSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "./miniComponents/Loader";
 import { StepperContext } from "../context/StepperContext";
 import Otp from "./Register/Otp";
+import { useNavigate } from "react-router-dom";
 const steps = ["Basic Deatails", "Medical Deatails", "OTP"];
+import { CircleX } from "lucide-react";
+import { toast } from "sonner";
 
 const displaySteps = (step) => {
   switch (step) {
@@ -20,13 +24,15 @@ const displaySteps = (step) => {
     case 2:
       return <MedicalDeatails />;
     case 3:
-      return <Opt />;
+      return <Otp />;
   }
 };
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate()
+  // const { loading, error } = useSelector((state) => state.otp);
+  const { loading, error } = useSelector((state) => state.register);
+  const navigate = useNavigate();
   //IMPORT STATES
   const {
     currentStep,
@@ -43,6 +49,7 @@ export default function RegisterForm() {
     setillneses,
     setOtp,
     otp,
+    resetType,
   } = useRegisterForm();
   const validate = () => {
     let valid = true;
@@ -60,42 +67,77 @@ export default function RegisterForm() {
     //IMPORT STATES
 
     //VALIDATOR
-    const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
+    const loaclPartRegix = /^[a-z0-9](\.?[a-z0-9]){5,29}/;
+    const allowedDomains = [
+      "gmail.com",
+      "hotmail.com",
+      "outlook.com",
+      "yahoo.com",
+      "icloud.com",
+      "live.com",
+      "protonmail.com",
+      "aol.com",
+    ];
+
     const phoneRegex = /^09\d{8}$/;
     const civilRegex = /^\d{11}$/;
-    if (!emailRegex.test(registerData.Email)) {
-      newErrors.email = "Please enter a valid email address";
+    const nameRegex = /^(?!\s*$)[a-zA-Z\u0600-\u06FF\s'-]{2,30}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    const email = registerData.email.trim().toLowerCase();
+    if (!nameRegex.test(registerData.first_name)) {
+      newErrors.firstName = "Please enter a valid first name";
       valid = false;
     }
-    if (!phoneRegex.test(registerData.PhoneNumber)) {
-      newErrors.phoneNumber = "Please enter a valid phone number";
+    if (!nameRegex.test(registerData.last_name)) {
+      newErrors.lastName = "Please enter a valid last name";
       valid = false;
     }
-    if (!civilRegex.test(registerData.CivilIdNumber)) {
-      newErrors.civilIdNumber = "Please enter a valid civil id";
+
+    if (!email.includes("@")) {
+      newErrors.email = "Email must contain '@' symbol";
+      valid = false;
+    } else {
+      const [localPart, domainPart] = email.split("@");
+
+      if (!localPart || !loaclPartRegix.test(localPart)) {
+        newErrors.email = "Invalid characters or format in email username";
+        valid = false;
+      } else if (!domainPart) {
+        newErrors.email = "Email domain is missing";
+        valid = false;
+      } else if (!allowedDomains.includes(domainPart)) {
+        newErrors.email = `Unsupported email domain. Allowed: ${allowedDomains.join(
+          ", "
+        )}`;
+        valid = false;
+      }
+    }
+
+    if (!phoneRegex.test(registerData.phone)) {
+      newErrors.phoneNumber =
+        "Phone number must start with 09 and be 10 digits";
       valid = false;
     }
-    if (registerData.FirstName.length < 4) {
-      newErrors.firstName = "Must be at least 4 characters ";
+    if (!civilRegex.test(registerData.civil_id_number)) {
+      newErrors.civilIdNumber = "Civil ID must be 11 digits";
       valid = false;
     }
-    if (registerData.LastName.length < 4) {
-      newErrors.lastName = "Must be at least 4 characters ";
+
+    if (!passwordRegex.test(registerData.password)) {
+      newErrors.password =
+        "Password must be at least 8 characters and contain both letters and numbers";
       valid = false;
     }
-    if (registerData.Password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    if (registerData.password !== registerData.password_confirmation) {
+      newErrors.confirmPassword = "Passwords do not match";
       valid = false;
     }
-    if (registerData.Password != registerData.ConfirmPassword) {
-      newErrors.confirmPassword = "Password does not match";
-      valid = false;
-    }
-    if (registerData.BirthDate == "") {
+
+    if (!registerData.birthday) {
       newErrors.birthDate = "This field is required";
       valid = false;
     }
-    if (registerData.Address == "") {
+    if (!registerData.address) {
       newErrors.address = "This field is required";
       valid = false;
     }
@@ -107,25 +149,97 @@ export default function RegisterForm() {
 
   //STEPPER BUTTON
   const handeCLick = async (direction) => {
-    // if (!validate()) return;
+    // console.log(direction);
     let newStep = currentStep;
     direction == "next" ? newStep++ : newStep--;
+
     if (newStep > 0 && newStep <= steps.length) {
-      if (newStep == 3) {
-        const resultAction = await dispatch(registerUser(registerData));
+      if (newStep == 2) {
+        if (!validate()) return;
+
+        setCurrents(newStep);
+        console.log(registerData);
+      } else if (newStep == 3) {
+        registerData.chronic_diseases = illneses;
+
+        let resultAction = await dispatch(registerUser(registerData));
 
         if (registerUser.fulfilled.match(resultAction)) {
-          localStorage.setItem("token", resultAction.payload.token);
+          toast.custom((t) => (
+            <div className="flex items-center gap-3 bg-green-50 border-l-4 border-curawell text-curawell p-4 rounded-md shadow-md">
+              {/* <span className="font-bold"></span> */}
+              <span className="ml-2 font-bold font-cairo">
+                Successfully Verified
+              </span>
+              <button
+                onClick={() => toast.dismiss(t)}
+                className="ml-auto text-curawell hover:text-black font-bold cursor-pointer"
+              >
+                <CircleX className="" />
+              </button>
+            </div>
+          ));
           setCurrents(newStep);
+        } else {
+          toast.custom((t) => (
+            <div className="flex items-center gap-3 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
+              <span className="font-bold">
+                <CircleX />
+              </span>
+              <span className="ml-2">Somthing went wrong</span>
+              <button
+                onClick={() => toast.dismiss(t)}
+                className="ml-auto text-gray-500 hover:text-black font-bold"
+              >
+                ×
+              </button>
+            </div>
+          ));
         }
       } else {
         setCurrents(newStep);
       }
-
-      setCurrents(newStep);
-    } else {
-      console.log(otp);
-      const resultAction1 = await dispatch(verifyOtp(otp));
+    } else if (newStep === 4) {
+      const resultAction1 = await dispatch(
+        verifyOtp({
+          code: otp,
+          type: "verify",
+          channel: "phone",
+          phone: registerData.phone,
+        })
+      );
+      if (verifyOtp.fulfilled.match(resultAction1)) {
+        toast.custom((t) => (
+          <div className="flex items-center gap-3 bg-green-50 border-l-4 border-curawell text-curawell p-4 rounded-md shadow-md">
+            {/* <span className="font-bold"></span> */}
+            <span className="ml-2 font-bold font-cairo">
+              Account Successfully Created
+            </span>
+            <button
+              onClick={() => toast.dismiss(t)}
+              className="ml-auto text-curawell hover:text-black font-bold cursor-pointer"
+            >
+              <CircleX className="" />
+            </button>
+          </div>
+        ));
+        navigate("/login");
+      } else {
+        toast.custom((t) => (
+          <div className="flex items-center gap-3 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
+            <span className="font-bold">
+              <CircleX />
+            </span>
+            <span className="ml-2">Somthing went wrong</span>
+            <button
+              onClick={() => toast.dismiss(t)}
+              className="ml-auto text-gray-500 hover:text-black font-bold"
+            >
+              ×
+            </button>
+          </div>
+        ));
+      }
     }
   };
   //STEPPER BUTTON
@@ -143,23 +257,28 @@ export default function RegisterForm() {
       <br />
 
       <hr className="w-11/12 my-4 border-blimo" />
-      <StepperContext.Provider
-        value={{
-          registerData,
-          setregisterData,
-          errors,
-          gender,
-          setGender,
-          illInput,
-          setillInput,
-          illneses,
-          setillneses,
-          otp,
-          setOtp,
-        }}
-      >
-        {displaySteps(currentStep)}
-      </StepperContext.Provider>
+      {loading ? (
+        <Loader />
+      ) : (
+        <StepperContext.Provider
+          value={{
+            registerData,
+            setregisterData,
+            errors,
+            gender,
+            setGender,
+            illInput,
+            setillInput,
+            illneses,
+            setillneses,
+            otp,
+            setOtp,
+            resetType,
+          }}
+        >
+          {displaySteps(currentStep)}
+        </StepperContext.Provider>
+      )}
 
       <div className="w-full flex justify-center mt-5">
         <StepperControl

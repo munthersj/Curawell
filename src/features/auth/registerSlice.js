@@ -5,8 +5,12 @@ import axios from "axios";
 export const registerUser = createAsyncThunk(
   "user/register",
   async (formData, thunkAPI) => {
+    console.log(formData);
     try {
-      const response = await axios.post("", formData);
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/register",
+        formData
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -37,7 +41,7 @@ export const registerSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        // console.log(action.error.message);
+        console.log(action.error.message);
         if (action.error.message === "Request failed with status code 401") {
           state.error = "Access Denied! Invalid Credentials";
         } else {

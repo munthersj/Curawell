@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export default function useLoginForm() {
   const [loginData, setloginData] = useState({
-    Email: "",
-    Password: "",
+    login: "",
+    password: "",
   });
   const [isVisibleVal, setisVisibleVal] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });

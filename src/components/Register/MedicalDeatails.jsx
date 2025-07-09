@@ -3,6 +3,7 @@ import { StepperContext } from "../../context/StepperContext";
 import IllCard from "../miniComponents/IllCard";
 export default function MedicalDeatails() {
   const content = useContext(StepperContext);
+  content.registerData.gender = content.gender;
   const inputs = content.illneses.map((props, index) => {
     return <IllCard key={index} name={props}></IllCard>;
   });
@@ -20,6 +21,8 @@ export default function MedicalDeatails() {
         />
         <button
           onClick={() => {
+            if (content.illInput == "") return;
+            console.log(content);
             const newTask = content.illInput;
             content.setillneses([...content.illneses, newTask]);
             content.setillInput("");
