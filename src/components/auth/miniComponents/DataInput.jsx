@@ -1,6 +1,6 @@
 import { Eye } from "lucide-react";
 import { EyeOff } from "lucide-react";
-import useLoginForm from "../../hooks/useLoginForm";
+import useLoginForm from "../../../hooks/useLoginForm";
 
 export default function DataInputs(props) {
   const { isVisibleVal, setisVisibleVal } = useLoginForm();

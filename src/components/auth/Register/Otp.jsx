@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 // import useRegisterForm from "../../hooks/useRegisterForm";
 import { useContext } from "react";
-import { StepperContext } from "../../context/StepperContext";
+import { StepperContext } from "../../../context/StepperContext";
 import { useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch } from "react-redux";
-import { sendOtp } from "../../features/auth/otpSlice";
+import { sendOtp } from "../../../features/auth/otpSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { CircleX } from "lucide-react";

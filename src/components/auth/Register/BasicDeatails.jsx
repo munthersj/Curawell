@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
 import RegisterInputs from "../miniComponents/RegisterInputs";
-import { StepperContext } from "../../context/StepperContext";
+import { StepperContext } from "../../../context/StepperContext";
 import { useContext, useState } from "react";
 import UploadAvatar from "../miniComponents/UploadAvatar";
-import GenderSelection from "../miniComponents/GenderSelection";
 export default function BasicDeatails() {
   const content = useContext(StepperContext);
   // const [selected, setSelected] = useState("option1");
