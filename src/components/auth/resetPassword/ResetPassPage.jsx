@@ -1,4 +1,4 @@
-import { StepperContext } from "../../context/StepperContext";
+import { StepperContext } from "../../../context/StepperContext";
 import { useContext, useState } from "react";
 import { EyeOff, Eye } from "lucide-react";
 

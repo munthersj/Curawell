@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
+// import axios from "axios";
+import axiosInstance from "../../config/axiosInstance";
 export const sendOtp = createAsyncThunk(
   "auth/sendOtp",
   async (data, thunkAPI) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/auth/send-code",
-        data
-      );
+      const response = await axiosInstance.post("/auth/send-code", data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -24,10 +21,7 @@ export const verifyOtp = createAsyncThunk(
   async (data, thunkAPI) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/auth/verify-code",
-        data
-      );
+      const response = await axiosInstance.post("/auth/verify-code", data);
       if (data.type == "reset_password") {
         console.log("done");
         localStorage.setItem("resetToken", response.data.reset_token);

@@ -1,4 +1,4 @@
-import { StepperContext } from "../../context/StepperContext";
+import { StepperContext } from "../../../context/StepperContext";
 import { Mail, Phone } from "lucide-react";
 
 import { useContext, useState } from "react";

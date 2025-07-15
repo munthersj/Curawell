@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import useRegisterForm from "../hooks/useRegisterForm";
+import useRegisterForm from "../../hooks/useRegisterForm";
 import RegisterInputs from "./miniComponents/RegisterInputs";
 import StepperControl from "./StepperControl";
 import Stepper from "./Stepper";
 import BasicDeatails from "./Register/BasicDeatails";
 import MedicalDeatails from "./Register/MedicalDeatails";
-import { registerUser } from "../features/auth/registerSlice";
-import { verifyOtp } from "../features/auth/otpSlice";
+import { registerUser } from "../../features/auth/registerSlice";
+import { verifyOtp } from "../../features/auth/otpSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "./miniComponents/Loader";
-import { StepperContext } from "../context/StepperContext";
+import { StepperContext } from "../../context/StepperContext";
 import Otp from "./Register/Otp";
 import { useNavigate } from "react-router-dom";
 const steps = ["Basic Deatails", "Medical Deatails", "OTP"];
@@ -155,7 +155,7 @@ export default function RegisterForm() {
 
     if (newStep > 0 && newStep <= steps.length) {
       if (newStep == 2) {
-        if (!validate()) return;
+        // if (!validate()) return;
 
         setCurrents(newStep);
         console.log(registerData);
@@ -181,12 +181,14 @@ export default function RegisterForm() {
           ));
           setCurrents(newStep);
         } else {
+          const [message, comp] = resultAction.payload.split(".");
+          console.log(resultAction);
           toast.custom((t) => (
             <div className="flex items-center gap-3 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
               <span className="font-bold">
                 <CircleX />
               </span>
-              <span className="ml-2">Somthing went wrong</span>
+              <span className="ml-2">{message}</span>
               <button
                 onClick={() => toast.dismiss(t)}
                 className="ml-auto text-gray-500 hover:text-black font-bold"

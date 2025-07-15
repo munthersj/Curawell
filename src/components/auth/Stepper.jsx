@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef } from "react";
-import useRegisterForm from "../hooks/useRegisterForm";
+import useRegisterForm from "../../hooks/useRegisterForm";
 export default function Stepper({ steps, currentStep, setCurrents }) {
   const { newStep, setNewStep } = useRegisterForm();
   const steRef = useRef();

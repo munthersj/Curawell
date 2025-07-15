@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { sendOtp, verifyOtp } from "../features/auth/otpSlice";
+import { sendOtp, verifyOtp } from "../../features/auth/otpSlice";
 import RestTypePage from "./resetPassword/ResetTypePage";
 import { useDispatch, useSelector } from "react-redux";
-import { StepperContext } from "../context/StepperContext";
+import { StepperContext } from "../../context/StepperContext";
 import OtpStepperControl from "./OtpStepperControl";
 import InputPage from "./resetPassword/InputPage";
 import Otp from "./Register/Otp";
 import Loader from "./miniComponents/Loader";
 import ResetPassPage from "./resetPassword/ResetPassPage";
-import { resetPassword } from "../features/auth/resetPasswordSlice";
+import { resetPassword } from "../../features/auth/resetPasswordSlice";
 import { CircleX } from "lucide-react";
 
 import { toast } from "sonner";

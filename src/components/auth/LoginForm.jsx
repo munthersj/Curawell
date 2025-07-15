@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { PhoneCall } from "lucide-react";
 import DataInputs from "./miniComponents/DataInput";
-import useLoginForm from "../hooks/useLoginForm";
+import useLoginForm from "../../hooks/useLoginForm";
 import LoginInputs from "./miniComponents/LoignInputs";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../features/auth/loginSlice";
+import { loginUser } from "../../features/auth/loginSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { CircleX } from "lucide-react";
+import GoogleLoginButton from "./google/GoogleLOginButton";
 export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +44,8 @@ export default function LoginForm() {
   async function handelSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
-
-    try {
-      const result = await dispatch(loginUser(loginData)).unwrap(); // ✅ يجلب البيانات مباشرة من thunk
+    const result = await dispatch(loginUser(loginData));
+    if (loginUser.fulfilled.match(result)) {
       toast.custom((t) => (
         <div className="flex items-center gap-3 bg-green-50 border-l-4 border-curawell text-curawell p-4 rounded-md shadow-md">
           {/* <span className="font-bold"></span> */}
@@ -60,19 +60,16 @@ export default function LoginForm() {
           </button>
         </div>
       ));
-      // navigate("/dashboard");
-    } catch (err) {
-      // ✅ نأخذ الخطأ مباشرة من ردّ الـ thunk
+      navigate("/home");
+    } else {
+      const [message, _] = result.payload.split(".");
+      console.log(result);
       toast.custom((t) => (
         <div className="flex items-center gap-3 bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-md">
           <span className="font-bold">
             <CircleX />
           </span>
-          <span className="ml-2">
-            {err?.message == "Request failed with status code 401"
-              ? "Invalid credentials"
-              : "Somthing Went Wrong"}
-          </span>
+          <span className="ml-2">{message}</span>
           <button
             onClick={() => toast.dismiss(t)}
             className="ml-auto text-gray-500 hover:text-black font-bold"
@@ -144,12 +141,13 @@ export default function LoginForm() {
                 <span className="text-xs font-bold text-black">
                   or login via
                 </span>
-                <button
+                <GoogleLoginButton />
+                {/* <button
                   type="button"
                   className="w-full bg-curawell rounded-lg py-3 text-white font-cairo hover:bg-curawell/80 transition-all"
                 >
                   Google
-                </button>
+                </button> */}
               </div>
             </form>
 

@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
+// import axios from "axios";
+import axiosInstance from "../../config/axiosInstance";
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, thunkAPI) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/auth/reset-password",
-        data
-      );
+      const response = await axiosInstance.post("/auth/reset-password", data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
