@@ -1,39 +1,30 @@
 import { useState } from "react";
 
-export default function useRegisterForm() {
+export default function useGoogleLogin() {
   const [gender, setGender] = useState();
-  const resetType = "phone";
-  const [registerData, setregisterData] = useState({
+  //   const resetType = "phone";
+  const [googleData, setgoogleData] = useState({
     first_name: "",
     last_name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
     birthday: "",
     civil_id_number: "",
     address: "",
     phone: "",
-    gender: "",
-    // ProfileIMG: "",
     chronic_diseases: [],
     hereditary_diseases: [],
     allergies: [],
     blood_group: "A+",
     weight: "75",
-    alternative_phone: "0988123456",
     height: "180",
   });
   const [isVisibleVal, setisVisibleVal] = useState(false);
-  const [currentStep, setCurrents] = useState(1);
-  const [newStep, setNewStep] = useState([]);
+  //   const [currentStep, setCurrents] = useState(1);
+  //   const [newStep, setNewStep] = useState([]);
   const [illneses, setillneses] = useState([]);
   const [illInput, setillInput] = useState("");
-  const [otp, setOtp] = useState("");
+  //   const [otp, setOtp] = useState("");
 
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -42,24 +33,17 @@ export default function useRegisterForm() {
     address: "",
   });
   return {
-    registerData,
-    setregisterData,
+    googleData,
+    setgoogleData,
     isVisibleVal,
     setisVisibleVal,
     errors,
     setErrors,
-    currentStep,
-    setCurrents,
-    newStep,
-    setNewStep,
-    gender,
-    setGender,
     illneses,
     setillneses,
     illInput,
     setillInput,
-    otp,
-    setOtp,
-    resetType,
+    setGender,
+    gender,
   };
 }

@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
+// import axios from "axios";
+import axiosInstance from "../../config/axiosInstance";
 export const registerUser = createAsyncThunk(
   "user/register",
   async (formData, thunkAPI) => {
+    console.log(formData);
     try {
-      const response = await axios.post("", formData);
+      const response = await axiosInstance.post("/register", formData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -19,7 +20,6 @@ export const registerUser = createAsyncThunk(
 export const registerSlice = createSlice({
   name: "user",
   initialState: {
-    token: null,
     loading: false,
     user: null,
     error: null,
@@ -37,7 +37,7 @@ export const registerSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        // console.log(action.error.message);
+        console.log(action.error.message);
         if (action.error.message === "Request failed with status code 401") {
           state.error = "Access Denied! Invalid Credentials";
         } else {
