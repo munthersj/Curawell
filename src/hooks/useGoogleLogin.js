@@ -15,7 +15,7 @@ export default function useGoogleLogin() {
     allergies: [],
     blood_group: "A+",
     weight: "75",
-    height: "180",
+    height: "170",
   });
   const [isVisibleVal, setisVisibleVal] = useState(false);
   //   const [currentStep, setCurrents] = useState(1);
