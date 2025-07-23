@@ -160,8 +160,6 @@ export default function RegisterForm() {
         setCurrents(newStep);
         console.log(registerData);
       } else if (newStep == 3) {
-        registerData.chronic_diseases = illneses;
-
         let resultAction = await dispatch(registerUser(registerData));
 
         if (registerUser.fulfilled.match(resultAction)) {
@@ -255,10 +253,7 @@ export default function RegisterForm() {
       <div className=" w-full ">
         <Stepper steps={steps} currentStep={currentStep} />
       </div>
-
       <br />
-
-      <hr className="w-11/12 my-4 border-blimo" />
       {loading ? (
         <Loader />
       ) : (

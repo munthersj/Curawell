@@ -14,14 +14,13 @@ export default function useRegisterForm() {
     address: "",
     phone: "",
     gender: "",
-    // ProfileIMG: "",
-    chronic_diseases: [],
     hereditary_diseases: [],
     allergies: [],
+    chronic_diseases: [],
     blood_group: "A+",
-    weight: "75",
+    weight: 0,
     alternative_phone: "0988123456",
-    height: "180",
+    height: 0,
   });
   const [isVisibleVal, setisVisibleVal] = useState(false);
   const [currentStep, setCurrents] = useState(1);

@@ -1,4 +1,4 @@
-export default function LineSection({ isInView }) {
+export default function LineSection({ isInView, introduce }) {
   let showCirucleOutLine = isInView ? "outline-8" : "outline-0";
   let showLineText = isInView ? "opacity-100" : "opacity-0";
 
@@ -9,11 +9,7 @@ export default function LineSection({ isInView }) {
         <span class="text-curawell ml-10 sm:ml-0  flex sm:inline   text-3xl sm:text-4xl font-bold mb-16 scale-y-110">
           Building healthy communities together
         </span>
-        <span class="text-xl hidden sm:inline ">
-          Weaving better health in our communities is at the heart of everything
-          we do. It’s how we help more people and places prosper. And it’s all
-          inspired by faith, driven by innovation, and powered by humanity.
-        </span>
+        <span class="text-xl hidden sm:inline ">{introduce.wise_en}</span>
       </div>
       {/* LeftDiv */}
       {/* RightDiv */}
@@ -96,8 +92,11 @@ export default function LineSection({ isInView }) {
         {/* Line Text */}
       </div>
       {/* background Lines */}
-      <div class= " absolute mt-100 sm:mt-0  w-full h-full">
-        <img src="src/assets/Selection (3).png" class=" w-full h-100 sm:h-full object-fit sm:object-cover "/>
+      <div class=" absolute mt-100 sm:mt-0  w-full h-full">
+        <img
+          src="src/assets/Selection (3).png"
+          class=" w-full h-100 sm:h-full object-fit sm:object-cover "
+        />
       </div>
       {/* background Lines */}
       {/* RightDiv */}

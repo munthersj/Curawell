@@ -1,41 +1,37 @@
 /* eslint-disable no-unused-vars */
 import Slider from "react-slick";
 import { useRef, useState } from "react";
-import {
-  MoveRight,
-  ArrowRight,
-  ArrowLeft,
-} from "lucide-react";
+import { MoveRight, ArrowRight, ArrowLeft } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTooth } from "@fortawesome/free-solid-svg-icons";
 
-export default function SlideComp() {
+export default function SlideComp({ doctors }) {
   const sliderRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   //   الداتا يلي بدك تعرضها جوا الكرادات
-  const data = [
-    {
-      title: "Doctor Name",
-      sub: "Doctor Department",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Doctor Name",
-      sub: "Doctor Department",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Doctor Name",
-      sub: "Doctor Department",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Doctor Name",
-      sub: "Doctor Department",
-      image: "src/assets/Selection (6).png",
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: "Doctor Name",
+  //     sub: "Doctor Department",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Doctor Name",
+  //     sub: "Doctor Department",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Doctor Name",
+  //     sub: "Doctor Department",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Doctor Name",
+  //     sub: "Doctor Department",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  // ];
   // متغير الاعدادات للسلايدر
   const settings = {
     infinite: true,
@@ -80,13 +76,13 @@ export default function SlideComp() {
   };
   //   توابع الانتقال تبع الاسهم
   const prevSlide = () => {
-      if (currentIndex > 0) {
-    sliderRef.current.slickPrev();
-  }
+    if (currentIndex > 0) {
+      sliderRef.current.slickPrev();
+    }
   };
 
   const nextSlide = () => {
-    if (currentIndex < data.length - 1) {
+    if (currentIndex < doctors.length - 1) {
       sliderRef.current.slickNext();
     }
   };
@@ -95,10 +91,17 @@ export default function SlideComp() {
       {/* الاسهم والنقاط */}
       <div className="  left-400 mb-20 sm:mb-6  flex ml-5 sm:ml-220 items-center  justify-center pr-5 hover:cursor-pointer ">
         <button onClick={prevSlide} class="">
-          <ArrowLeft className={`${currentIndex <= 0 ? "text-gray-400" : "text-curawell hover:cursor-pointer"}`} size={34} />
+          <ArrowLeft
+            className={`${
+              currentIndex <= 0
+                ? "text-gray-400"
+                : "text-curawell hover:cursor-pointer"
+            }`}
+            size={34}
+          />
         </button>
         <div className=" flex gap-2 ">
-          {data.map((_, index) => (
+          {doctors.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
@@ -109,23 +112,36 @@ export default function SlideComp() {
           ))}
         </div>
         <button onClick={nextSlide} className="  ">
-          <ArrowRight className={`${currentIndex >= data.length - 1 ? "text-gray-400" : "text-curawell  hover:cursor-pointer"}`}  size={34} />
+          <ArrowRight
+            className={`${
+              currentIndex >= doctors.length - 1
+                ? "text-gray-400"
+                : "text-curawell  hover:cursor-pointer"
+            }`}
+            size={34}
+          />
         </button>
       </div>
       {/* السلايدر وبالريتيرن تبع الماب بتظبط شكل كل كارد متغير السيتينغ هيك بتمرقه والريف مشان ينربط بالبالاسهم والنقاط  */}
       <Slider ref={sliderRef} {...settings}>
-        {data.map((d) => {
+        {doctors.map((d) => {
           return (
             <div className=" pr-3 sm:pr-0 sm:px-5 py-5 cursor-pointer ">
               <div className="flex flex-col bg-white shadow-md shadow-gray-600/50 rounded-2xl   ">
-              <div  >
-                <img src={d.image} alt="" class="rounded-t-2xl"  />
+                <div>
+                  <img
+                    src="src/assets/Selection (6).png"
+                    alt=""
+                    class="rounded-t-2xl"
+                  />
                 </div>
                 <div className="flex flex-col pt-4 pb-6">
-                  <h1 className="flex justify-center text-2xl font-cairo font-bold pb-3 ">
-                    {d.title}
+                  <h1 className="flex w-full justify-center text-2xl font-cairo font-bold pb-3 px-5 flex-wrap text-center">
+                    {d.doctor_info.name_doctor}
                   </h1>
-                  <p className="flex justify-center text-curawell text-lg font-cairo ">{d.sub}</p>
+                  <p className="flex justify-center text-curawell text-lg font-cairo ">
+                    Doctor Department
+                  </p>
                 </div>
               </div>
             </div>

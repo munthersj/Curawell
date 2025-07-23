@@ -1,9 +1,41 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState, useEffect } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  fetchLandingClinicsData,
+  fetchLandingOffersData,
+  fetchLandingCommentsData,
+  fetchLandingIntruduceData,
+  fetchLandingSectionsData,
+  fetchLandingContactData,
+  fetchLandingDoctors,
+} from "../features/data/landingPageSlice";
 export default function useLandingPage() {
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const {
+    sections,
+    offers,
+    doctors,
+    comments,
+    clinics,
+    contactInfo,
+    intruduce,
+    status,
+  } = useSelector((state) => state.landingData);
+
   const [isLineSectionInView, setIsLineSectionInView] = useState(false);
   const lineSectionRef = useRef(null);
-
+  useEffect(() => {
+    dispatch(fetchLandingClinicsData());
+    dispatch(fetchLandingOffersData());
+    dispatch(fetchLandingCommentsData());
+    dispatch(fetchLandingIntruduceData());
+    dispatch(fetchLandingSectionsData());
+    dispatch(fetchLandingContactData());
+    dispatch(fetchLandingDoctors());
+  }, [dispatch]);
   // For ContactSection
   const [isContactSectionInView, setIsContactSectionInView] = useState(false);
   const contactSectionRef = useRef(null);
@@ -64,5 +96,14 @@ export default function useLandingPage() {
     setIsContactSectionInView,
     lineSectionRef,
     contactSectionRef,
+    sections,
+    offers,
+    doctors,
+    comments,
+    clinics,
+    intruduce,
+    dispatch,
+    contactInfo,
+    status,
   };
 }

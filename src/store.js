@@ -4,7 +4,9 @@ import registerReducer from "./features/auth/registerSlice";
 import otpReducer from "./features/auth/otpSlice";
 import resetPasswordReducer from "./features/auth/resetPasswordSlice";
 import googleRducer from "./features/auth/googleSlice";
-
+import homeReducer from "./features/data/homeSlice";
+import landinPageReducer from "./features/data/landingPageSlice";
+import clinicReducer from "./features/data/clinicsSlice";
 export default configureStore({
   reducer: {
     login: loginReducer,
@@ -12,5 +14,8 @@ export default configureStore({
     otp: otpReducer,
     resetPassword: resetPasswordReducer,
     googleLogin: googleRducer,
+    homeData: homeReducer,
+    landingData: landinPageReducer,
+    clinicsData: clinicReducer,
   },
 });

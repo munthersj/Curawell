@@ -2,7 +2,7 @@
 
 import SlideComp from "./SlideComp";
 
-  export default function AboutClinics() {
+export default function AboutClinics({ clinics }) {
   return (
     <div className=" bg-grayc w-full justify-between h-screen flex flex-col sm:flex-row p-0 m-0 overflow-hidden">
       <div
@@ -20,16 +20,13 @@ import SlideComp from "./SlideComp";
         />
       </div>
       <div className="w-full sm:w-1/2 h-full flex flex-col items-center  mr-10 ">
-      <h1 class=" px-11 text-black text-3xl sm:text-6xl font-bold flex mt-20 leading-12 sm:leading-16 ">
-        Our specialized clinics, Whole person care is our specialty
-      </h1>
-      <div>
-        <SlideComp/>
-      </div>
-
-      
+        <h1 class=" px-11 text-black text-3xl sm:text-5xl font-bold flex mt-20 leading-12 sm:leading-16 ">
+          Our specialized clinics, Whole person care is our specialty
+        </h1>
+        <div>
+          <SlideComp clinics={clinics} />
+        </div>
       </div>
     </div>
   );
 }
-

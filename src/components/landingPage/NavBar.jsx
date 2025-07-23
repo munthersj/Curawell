@@ -86,7 +86,7 @@ export default function NavBar() {
     smallListAboutOpacity: listIsClicked.about ? "opacity-100" : "opacity-0",
   };
 
-  console.log(smallListTranslate.smallListServicesTranslate);
+  // console.log(smallListTranslate.smallListServicesTranslate);
 
   return (
     <>

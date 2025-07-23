@@ -3,44 +3,20 @@ import { PhoneCall } from "lucide-react";
 import DataInputs from "./miniComponents/DataInput";
 import useLoginForm from "../../hooks/useLoginForm";
 import LoginInputs from "./miniComponents/LoignInputs";
-import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/auth/loginSlice";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { CircleX } from "lucide-react";
 import GoogleLoginButton from "./google/GoogleLOginButton";
 export default function LoginForm() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loginData, setloginData, setErrors, errors } = useLoginForm();
-
-  const { loading, error } = useSelector((state) => state.login);
-
-  const validate = () => {
-    let valid = true;
-    let newErrors = { email: "", password: "" };
-
-    const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
-    const phoneRegex = /^09\d{8}$/;
-    if (!emailRegex.test(loginData.login)) {
-      if (phoneRegex.test(loginData.login)) {
-        valid = true;
-      } else {
-        newErrors.email = "Please enter a valid Credit";
-        valid = false;
-      }
-    }
-
-    if (loginData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-
-    return valid;
-  };
-
+  const {
+    loginData,
+    setloginData,
+    errors,
+    loading,
+    navigate,
+    dispatch,
+    validate,
+  } = useLoginForm();
   async function handelSubmit(e) {
     e.preventDefault();
     if (!validate()) return;
@@ -142,12 +118,6 @@ export default function LoginForm() {
                   or login via
                 </span>
                 <GoogleLoginButton />
-                {/* <button
-                  type="button"
-                  className="w-full bg-curawell rounded-lg py-3 text-white font-cairo hover:bg-curawell/80 transition-all"
-                >
-                  Google
-                </button> */}
               </div>
             </form>
 

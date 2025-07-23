@@ -3,32 +3,32 @@ import Slider from "react-slick";
 import { useRef, useState } from "react";
 import { ArrowRight, ArrowLeft, Quote } from "lucide-react";
 
-export default function SlideComp() {
+export default function SlideComp({ comments }) {
   const sliderRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const data = [
-    {
-      title: "Our Patient opinions",
-      sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Our Patient opinions",
-      sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Our Patient opinions",
-      sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
-      image: "src/assets/Selection (6).png",
-    },
-    {
-      title: "Our Patient opinions",
-      sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
-      image: "src/assets/Selection (6).png",
-    },
-  ];
+  // const data = [
+  //   {
+  //     title: "Our Patient opinions",
+  //     sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Our Patient opinions",
+  //     sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Our Patient opinions",
+  //     sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  //   {
+  //     title: "Our Patient opinions",
+  //     sub: "I really like this app! The user interface is very user-friendly, and the features are quite useful. It has saved me a lot of time.This website has a beautiful design and is well-optimized for mobile. I appreciate how they display information clearly and concisely.",
+  //     image: "src/assets/Selection (6).png",
+  //   },
+  // ];
 
   const settings = {
     infinite: true,
@@ -56,7 +56,7 @@ export default function SlideComp() {
   };
 
   const nextSlide = () => {
-    if (currentIndex < data.length - 1) {
+    if (currentIndex < comments.length - 1) {
       sliderRef.current.slickNext();
     }
   };
@@ -78,7 +78,7 @@ export default function SlideComp() {
         <button onClick={nextSlide}>
           <ArrowRight
             className={`${
-              currentIndex >= data.length - 1
+              currentIndex >= comments.length - 1
                 ? "text-gray-400"
                 : "text-curawell hover:cursor-pointer"
             }`}
@@ -88,16 +88,16 @@ export default function SlideComp() {
       </div>
 
       {/* Slider */}
+      <h1 className="text-center text-4xl sm:text-4xl md:text-5xl font-cairo font-bold ">
+        Our Patient opinions
+      </h1>
       <Slider ref={sliderRef} {...settings}>
-        {data.map((d, index) => (
+        {comments.map((d, index) => (
           <div key={index}>
             <div className="flex flex-col items-center justify-center bg-transparent px-4 py-8 min-h-screen">
-              <h1 className="text-center text-4xl sm:text-4xl md:text-5xl font-cairo font-bold mb-30">
-                {d.title}
-              </h1>
               <Quote size={24} className="mb-2 text-gray-600" />
               <p className="text-center text-lg sm:text-lg md:text-2xl text-gray-700 font-cairo w-70 sm:w-full sm:max-w-2xl pb-15 sm:pb-5">
-                {d.sub}
+                {d.comment_en}
               </p>
               <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-4">
                 <img
@@ -107,7 +107,7 @@ export default function SlideComp() {
                 />
               </div>
               <h3 className="text-lg sm:text-2xl font-semibold mb-2">
-                Ali Ahmad
+                {d.patient.name_patient}
               </h3>
               <div className="flex items-center">
                 {[...Array(4)].map((_, i) => (

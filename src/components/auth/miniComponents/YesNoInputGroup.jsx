@@ -27,7 +27,7 @@ export default function YesNoInputGroup({ question, placeholder, onChange }) {
   };
 
   return (
-    <div className="flex flex-col px-14 gap-4 w-full">
+    <div className="flex flex-col my-5 px-14 gap-4 w-full">
       {/* السؤال + نعم/لا */}
       <div className="flex items-center gap-4">
         <label className="font-bold font-cairo text-xl text-gray-700">
