@@ -15,6 +15,11 @@ import NotFoundPage from "../components/NotFoundPage";
 // import DashBoardPage from "../components/DashBoardPage";
 // import { useSelector } from "react-redux";
 import Labratory from "../components/clinics/Labratory";
+import Profile from "../components/userDashboard/profile";
+import AppointmentsPage from "../components/userDashboard/AppointmentsPage";
+import DocumentsPage from "../components/userDashboard/DocumentsPage";
+import BillsPage from "../components/userDashboard/BillsPage";
+import PointsPage from "../components/userDashboard/PointsPage";
 export default function AppRoutes() {
   function NotFound() {
     return (
@@ -40,6 +45,7 @@ export default function AppRoutes() {
         <Route path="/googleLogin" element={<MedDeatails />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/contactUsPage" element={<ContactUsPage />} />
+
       </Route>
       <Route path="/" element={<SmartLanding />} />
       {/* <Route path="/dashboard" element={<DashBoardPage />} /> */}
@@ -51,6 +57,11 @@ export default function AppRoutes() {
           path="/cosmeticClinic/:serviceId"
           element={<CosmeticClinicsPage />}
         />
+          <Route path="/dashboard" element={<Profile />} />
+          <Route path="/appointments" element={<AppointmentsPage />} />
+          <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/bills" element={<BillsPage />} />
+          <Route path="/points" element={<PointsPage />} />
         <Route path="/homeCare/:serviceId" element={<HomeCareCos />} />
         <Route path="/labratory" element={<Labratory />} />
       </Route>
