@@ -1,30 +1,20 @@
-
-
 @font-face {
   font-family: Cairo;
-  src: url('./assets/fonts/Cairo/Cairo-Regular.ttf');
+  src: url("./assets/fonts/Cairo/Cairo-Regular.ttf");
   font-weight: 400;
-
 }
 
 @font-face {
   font-family: Cairo;
-  src: url('./assets/fonts/Cairo/Cairo-Bold.ttf');
+  src: url("./assets/fonts/Cairo/Cairo-Bold.ttf");
   font-weight: 600;
-
 }
 
 @import "tailwindcss";
-
 
 @theme {
   --color-curawell: #972e6a;
   --color-grayc: #f8f9fa;
   --color-blimo: #22ccb2;
-  --font-cairo: Cairo, "sans-serif"
+  --font-cairo: Cairo, "sans-serif";
 }
-
-
-
-
-
