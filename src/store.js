@@ -7,6 +7,8 @@ import googleRducer from "./features/auth/googleSlice";
 import homeReducer from "./features/data/homeSlice";
 import landinPageReducer from "./features/data/landingPageSlice";
 import clinicReducer from "./features/data/clinicsSlice";
+import cosmeticReducer from "./features/data/cosmeticSlice";
+import navBarReducer from "./features/data/navBarSlice";
 export default configureStore({
   reducer: {
     login: loginReducer,
@@ -17,5 +19,7 @@ export default configureStore({
     homeData: homeReducer,
     landingData: landinPageReducer,
     clinicsData: clinicReducer,
+    cosmeticData: cosmeticReducer,
+    navBarData: navBarReducer,
   },
 });

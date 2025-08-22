@@ -11,7 +11,7 @@ export default function SpecializedSlider({
   settings,
 }) {
   return (
-    <div className="flex flex-col w-full pl-24 md:mt-96  ">
+    <div className="flex flex-col w-full pl-24 md:mt-80">
       <h1 className="text-5xl font-bold font-cairo">Our Specialized Clinics</h1>
       <div className="flex items-center w-full justify-end gap-4 pr-10 ">
         <button onClick={prevSlide} className="">

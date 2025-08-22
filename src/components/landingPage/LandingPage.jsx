@@ -11,6 +11,7 @@ import QuickSub from "./QuickSub";
 import CurwellFooter from "../CurwellFooter";
 import useLandingPage from "../../hooks/useLandingPage";
 import SlideCompView from "./SlideCompView";
+import LogoLoader from "../LogoLoader";
 
 export default function LandingPage() {
   const {
@@ -25,9 +26,12 @@ export default function LandingPage() {
     contactInfo,
     clinics,
     intruduce,
+    status,
   } = useLandingPage();
 
-  return (
+  return sections == null || status == "loading" ? (
+    <LogoLoader fullscreen size={140} speed={1.8} />
+  ) : (
     <>
       <NavBar />
       <IntroducingSection introduce={intruduce} />
@@ -48,7 +52,7 @@ export default function LandingPage() {
         />
       </div>
       <DoctorsSection doctors={doctors} />
-      <div class="w-full h-screen pt-10 bg-grayc">
+      <div className="w-full h-screen pt-10 bg-grayc">
         <SlideCompView comments={comments} />
       </div>
       <OffersSection offers={offers} />

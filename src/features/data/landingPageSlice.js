@@ -5,7 +5,7 @@ import axiosInstance from "../../config/axiosInstance";
 export const fetchLandingClinicsData = createAsyncThunk(
   "data/landing/fetchClinicsData",
   async () => {
-    const response = await axiosInstance.get("/get_clinics");
+    const response = await axiosInstance.post("/get_clinics", { homeCare: "" });
     return response.data;
   }
 );
@@ -26,7 +26,7 @@ export const fetchLandingSectionsData = createAsyncThunk(
 export const fetchLandingCommentsData = createAsyncThunk(
   "data/landing/fetchCommentsData",
   async () => {
-    const response = await axiosInstance.get("/get_comments");
+    const response = await axiosInstance.post("/get_comments", {});
 
     return response.data;
   }

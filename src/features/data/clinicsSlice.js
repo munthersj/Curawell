@@ -15,7 +15,7 @@ export const fetchClinicsDoctors = createAsyncThunk(
 export const fetchClinicsData = createAsyncThunk(
   "data/clinics/fetchCData",
   async () => {
-    const response = await axiosInstance.get("/get_clinics");
+    const response = await axiosInstance.post("/get_clinics", { homeCare: "" });
 
     return response.data;
   }

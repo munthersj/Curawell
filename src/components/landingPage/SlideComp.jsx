@@ -45,10 +45,10 @@ export default function SlideComp({ clinics }) {
     }
   };
   return (
-    <div class="w-100 sm:w-500 mx-36 left-90 mt-20 sm:mr-60 ">
+    <div className="w-100 sm:w-500 mx-36 left-90 mt-20 sm:mr-60 ">
       {/* الاسهم والنقاط */}
       <div className="  left-400 mb-20 sm:mb-0  flex ml-5 sm:ml-200 items-center  justify-center pr-5 hover:cursor-pointer ">
-        <button onClick={prevSlide} class="">
+        <button onClick={prevSlide} className="">
           <ArrowLeft
             className={`${
               currentIndex <= 0

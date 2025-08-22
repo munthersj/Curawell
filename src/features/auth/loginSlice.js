@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
     console.log(userInfo);
     try {
       const response = await axiosInstance.post("/login", userInfo);
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.data.token);
       console.log(localStorage.getItem("token"));
       return response;
     } catch (error) {

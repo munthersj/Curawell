@@ -6,9 +6,16 @@ export default function useHomePage() {
   const sliderRef = useRef(null);
   const sliderRef1 = useRef(null);
 
-  const { clinics, comments, articels, offers, status, error } = useSelector(
-    (state) => state.homeData
-  );
+  const {
+    clinics,
+    comments,
+    articels,
+    offers,
+    status,
+    error,
+    sections,
+    status1,
+  } = useSelector((state) => state.homeData);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentIndex1, setCurrentIndex1] = useState(0);
@@ -99,7 +106,9 @@ export default function useHomePage() {
     articels,
     comments,
     offers,
+    sections,
     status,
+    status1,
     error,
     currentIndex,
     setCurrentIndex,

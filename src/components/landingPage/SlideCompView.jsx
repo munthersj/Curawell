@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import { useRef, useState } from "react";
 import { ArrowRight, ArrowLeft, Quote } from "lucide-react";
 
-export default function SlideComp({ comments }) {
+export default function SlideCompView({ comments }) {
   const sliderRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 

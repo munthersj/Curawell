@@ -87,10 +87,10 @@ export default function SlideComp({ doctors }) {
     }
   };
   return (
-    <div class="w-full  relative ml-1 sm:ml-0  ">
+    <div className="w-full  relative ml-1 sm:ml-0  ">
       {/* الاسهم والنقاط */}
       <div className="  left-400 mb-20 sm:mb-6  flex ml-5 sm:ml-220 items-center  justify-center pr-5 hover:cursor-pointer ">
-        <button onClick={prevSlide} class="">
+        <button onClick={prevSlide} className="">
           <ArrowLeft
             className={`${
               currentIndex <= 0
@@ -132,7 +132,7 @@ export default function SlideComp({ doctors }) {
                   <img
                     src="src/assets/Selection (6).png"
                     alt=""
-                    class="rounded-t-2xl"
+                    className="rounded-t-2xl"
                   />
                 </div>
                 <div className="flex flex-col pt-4 pb-6">

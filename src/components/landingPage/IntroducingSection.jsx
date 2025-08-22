@@ -14,26 +14,26 @@ export default function IntroducingSection({ introduce }) {
   return (
     // Intrdoucing Section Container
     <div
-      class=" h-20 pt-18 px-0 sm:px-6 md:px-8 lg:px-10 xl:px-26 relative mb-20"
+      className=" h-20 pt-18 px-0 sm:px-6 md:px-8 lg:px-10 xl:px-26 relative mb-20"
       style={{ height: "calc(100vh)" }}
     >
       {/* Image Container */}
-      <div class=" w-full " style={{ height: "calc(100vh - 4.5rem)" }}>
+      <div className=" w-full " style={{ height: "calc(100vh - 4.5rem)" }}>
         <img
           src="src/assets/Selection (2).png"
           alt=""
-          class="w-full h-full object-cover"
+          className="w-full h-full object-cover"
         ></img>
       </div>
       {/* Image Container */}
       {/* Image Text  */}
       <div
-        class={`flex flex-col absolute text-grayc bottom-35 sm:bottom-25 w-full  sm:w-1/2 justify-end items-center sm:items-start sm:pl-10 transition-all duration-1000 ease-out ${mountedControl}`}
+        className={`flex flex-col absolute text-grayc bottom-35 sm:bottom-25 w-full  sm:w-1/2 justify-end items-center sm:items-start sm:pl-10 transition-all duration-1000 ease-out ${mountedControl}`}
       >
-        <h1 class="font-bold text-4xl sm:text-6xl mb-10">
+        <h1 className="font-bold text-4xl sm:text-6xl mb-10">
           Where expertise<br></br> meets compassion
         </h1>
-        <p class="text-md px-10 ">
+        <p className="text-md px-10 ">
           {introduce.preface_en}
           {/* Ipsum labore esse commodo minim ullamco cupidatat nostrud ullamco 
           commodo<br></br> minim consectetur eu  proident laborum officia nulla anim

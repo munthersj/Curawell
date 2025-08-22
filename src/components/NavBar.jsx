@@ -4,7 +4,16 @@ import { Menu } from "lucide-react";
 import useNavBar from "../hooks/useNavBar";
 import { ChevronRight } from "lucide-react";
 export default function NavBar() {
-  const { listIsClicked, setListIsClicked, showBar, setShowBar } = useNavBar();
+  const {
+    listIsClicked,
+    setListIsClicked,
+    showBar,
+    setShowBar,
+    sections,
+    handleSectionClick,
+    clinics,
+    handleClinicClick,
+  } = useNavBar();
 
   function handleServiceClick() {
     setListIsClicked({
@@ -88,14 +97,25 @@ export default function NavBar() {
   };
 
   // console.log(smallListTranslate.smallListServicesTranslate);
-
+  // const services = [
+  //   { id: 1, name: "First Service", href: "#" },
+  //   { id: 2, name: "Secd Service", href: "#" },
+  //   { id: 3, name: "Third Service", href: "#" },
+  //   { id: 4, name: "Fourth Service", href: "#" },
+  // ];
+  // const clinics = [
+  //   { id: 1, name: "First Clinics", href: "#" },
+  //   { id: 2, name: "Second Clinics", href: "#" },
+  //   { id: 3, name: "Third Clinics", href: "#" },
+  //   { id: 4, name: "Fourth Clinics", href: "#" },
+  // ];
   return (
     <>
       <nav className="bg-grayc fixed  text-curawell  flex justify-between sm:justify-around h-20  w-full shadow-lg z-50">
         {/* LOGO */}
         <div className="  px-5 flex sm:w-1/12 justify-center items-center ">
           <img
-            src="src/assets/lo1go.png"
+            src="/images/lo1go.png"
             alt="Registration"
             style={{ width: "50px", height: "50px" }}
           />
@@ -120,44 +140,29 @@ export default function NavBar() {
                   <ChevronRight />
                 </div>
                 <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div>
-                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-4  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
+                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-1  -bottom-65 group-hover:-bottom-79 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
-                    <li className="relative flex justify-center px-5  py-5 hover:shadow-2xs lg:bg-grayc md:bg-red hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
+                    {sections.map((service, index) => (
+                      <li
+                        onClick={(e) => {
+                          e.preventDefault(); // يمنع فتح تبويب جديد/تنفيذ href
+                          e.stopPropagation();
+                          handleSectionClick(service);
+                        }}
+                        key={service.id}
+                        className={`relative flex justify-center px-5 py-5 hover:shadow-2xs hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ${
+                          index === 0 ? "lg:bg-grayc md:bg-red" : "bg-grayc"
+                        }`}
                       >
-                        First Service
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Second Service
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Third Service
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Fourth Service
-                      </a>
-                    </li>
+                        <a
+                          className="text-[16px] font-normal"
+                          href="#"
+                          target="_blank"
+                        >
+                          {service.name_en}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -173,44 +178,31 @@ export default function NavBar() {
                   <ChevronRight />
                 </div>
                 <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div>
-                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-4  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
+                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-4  -bottom-65 group-hover:-bottom-110 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
-                    <li className="relative flex justify-center px-5 py-5 hover:shadow-2xs bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
+                    {clinics.map((clinic, index) => (
+                      <li
+                        onClick={(e) => {
+                          e.preventDefault(); // يمنع فتح تبويب جديد/تنفيذ href
+                          e.stopPropagation();
+                          handleClinicClick(clinic);
+                        }}
+                        key={clinic.id}
+                        className={`relative flex justify-center px-5 py-5 hover:shadow-2xs hover:bg-gray-100 transition-all duration-300 whitespace-nowrap ${
+                          index < clinics.length - 1
+                            ? "border-b border-curawell"
+                            : ""
+                        } bg-grayc`}
                       >
-                        First Clinics
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Second Clinics
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Third Clinics
-                      </a>
-                    </li>
-                    <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
-                      <a
-                        className="text-[16px] font-normal"
-                        href="#"
-                        target="_blank"
-                      >
-                        Fourth Clinics
-                      </a>
-                    </li>
+                        <a
+                          className="text-[16px] font-normal"
+                          href={clinic.href}
+                          target="_blank"
+                        >
+                          {clinic.name_en}
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

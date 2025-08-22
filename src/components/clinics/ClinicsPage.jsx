@@ -11,7 +11,8 @@ import {
 } from "../../features/data/clinicsSlice";
 import ClinicsSections from "./ClinicsSection";
 import DoctorsSection from "../landingPage/DoctorsSection";
-import CurwellFooter from "../CurwellFooter";
+import LogoLoader from "../LogoLoader";
+
 export default function ClinicsPage() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,24 +20,9 @@ export default function ClinicsPage() {
     dispatch(fetchClinicsData());
     dispatch(fetchQuestionData());
   }, []);
-  const { clinics, doctors, questions } = useSelector(
+  const { clinics, doctors, questions, status } = useSelector(
     (state) => state.clinicsData
   );
-  const faqData = [
-    {
-      question: "ما هي ساعات العمل الرسمية؟",
-      answer: "ساعات العمل من الأحد إلى الخميس من 9 صباحًا حتى 5 مساءً.",
-    },
-    {
-      question: "هل تقدمون خدمات الاستشارة المجانية؟",
-      answer: "نعم، نحن نقدم جلسة استشارية مجانية أولى لجميع العملاء الجدد.",
-    },
-    {
-      question: "كيف يمكنني حجز موعد؟",
-      answer:
-        "يمكنك الحجز من خلال موقعنا الإلكتروني أو الاتصال برقم خدمة العملاء.",
-    },
-  ];
 
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -46,11 +32,10 @@ export default function ClinicsPage() {
   const newQ = questions.slice(0, 5);
   return (
     <div className="flex flex-col ">
-      {!clinics || clinics.length < 5 ? (
-        <div>loading...</div>
+      {!clinics || clinics.length < 5 || status == "loading" ? (
+        <LogoLoader fullscreen size={140} speed={1.8} />
       ) : (
         <>
-          <NavBar />
           <img src="src/assets/clin.png" alt="" className="object-cover" />
           <ClinicsSections clinics={clinics} />
           <DoctorsSection doctors={doctors} />
@@ -83,8 +68,6 @@ export default function ClinicsPage() {
               </h1>
             </div>
           </div>
-
-          <CurwellFooter />
         </>
       )}
     </div>

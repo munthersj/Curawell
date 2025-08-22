@@ -1,7 +1,21 @@
 import { MoveRight } from "lucide-react";
-export default function CardLarge({ icon, title, description }) {
+
+import { useNavigate } from "react-router-dom";
+
+export default function CardLarge({ icon, title, description, payload }) {
+  const navigate = useNavigate();
+  // console.log(JSON.stringify(payload));
   return (
-    <button className="flex flex-col items-start gap-2 bg-white rounded-2xl cursor-pointer pl-4 pr-10 py-4 w-full sm:w-auto transition-all">
+    <button
+      onClick={() => {
+        title == "Clinic"
+          ? navigate("/clinicsPage")
+          : title == "HomeCare"
+          ? navigate(`/homeCare/${payload.id}`)
+          : navigate("");
+      }}
+      className="flex flex-col items-start gap-2 bg-white rounded-2xl cursor-pointer pl-4 pr-10 py-4 w-full sm:w-auto transition-all"
+    >
       {icon}
       <div className="flex flex-col gap-1 items-start">
         <h1 className="font-cairo font-bold text-[15px] sm:text-xl">{title}</h1>

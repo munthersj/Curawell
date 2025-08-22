@@ -2,12 +2,12 @@
 import NavBar from "../NavBar";
 import { Pagination, Autoplay } from "swiper/modules";
 import { useEffect } from "react";
-import CurwellFooter from "../CurwellFooter";
 import {
   fetchHomeClinicsData,
   fetchHomeOffersData,
   fetchHomeCommentsData,
   fetchArticelsData,
+  fetchLandingSectionsData,
 } from "../../features/data/homeSlice";
 import useHomePage from "../../hooks/useHomePage";
 import AbsoiluteDiv from "./AbsoluteDiv";
@@ -15,6 +15,7 @@ import SpecializedSlider from "./SpecializedSlider";
 import OffersSlider from "./OffersSlider";
 import ArticalsSlider from "./ArticelsSlider";
 import PatientsFeedPacks from "./PatientsFeedPacks";
+import LogoLoader from "../LogoLoader";
 export default function HomePage() {
   const {
     dispatch,
@@ -24,6 +25,7 @@ export default function HomePage() {
     articels,
     comments,
     offers,
+    sections,
     status,
     error,
     currentIndex,
@@ -37,18 +39,21 @@ export default function HomePage() {
     prevSlide1,
     nextSlide,
     nextSlide1,
+    status1,
   } = useHomePage();
   useEffect(() => {
     dispatch(fetchHomeCommentsData());
     dispatch(fetchHomeClinicsData());
     dispatch(fetchHomeOffersData());
     dispatch(fetchArticelsData());
+    dispatch(fetchLandingSectionsData());
   }, []);
-
-  return (
-    <div className="flex flex-col items-center ">
-      <NavBar />
-      <AbsoiluteDiv />
+  // console.log(comments);
+  return status1 == "loading" || status == "loading" ? (
+    <LogoLoader fullscreen size={140} speed={1.8} />
+  ) : (
+    <div className="flex flex-col  ">
+      <AbsoiluteDiv data={sections} />
       <SpecializedSlider
         prevSlide={prevSlide}
         clinics={clinics}
@@ -72,7 +77,6 @@ export default function HomePage() {
         Pagination={Pagination}
         comments={comments}
       />
-      <CurwellFooter />
     </div>
   );
 }
