@@ -76,7 +76,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingClinicsData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.clinics = action.payload.data;
       })
       .addCase(fetchLandingClinicsData.rejected, (state, action) => {
@@ -90,7 +90,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingOffersData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.offers = action.payload.data;
       })
       .addCase(fetchLandingOffersData.rejected, (state, action) => {
@@ -104,7 +104,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingSectionsData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.sections = action.payload.data;
       })
       .addCase(fetchLandingSectionsData.rejected, (state, action) => {
@@ -132,7 +132,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingIntruduceData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.intruduce = action.payload.data;
       })
       .addCase(fetchLandingIntruduceData.rejected, (state, action) => {
@@ -146,7 +146,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingContactData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.contactInfo = action.payload.data;
       })
       .addCase(fetchLandingContactData.rejected, (state, action) => {
@@ -160,7 +160,7 @@ const landingDataSlice = createSlice({
       })
       .addCase(fetchLandingDoctors.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
+        // console.log(action.payload);
         state.doctors = action.payload.data;
       })
       .addCase(fetchLandingDoctors.rejected, (state, action) => {

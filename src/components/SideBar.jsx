@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logOut } from "../features/auth/loginSlice";
 export default function SideBar() {
+  // const navigate = useNavigate();
   const topNavItems = [
     { label: "Home", path: "/home" },
     { label: "Dashboard", path: "/dashboard" },
@@ -9,9 +11,17 @@ export default function SideBar() {
     { label: "Bills", path: "/bills" },
     { label: "Points", path: "/points" },
   ];
-
-  const bottomNavItems = [{ label: "Log out", path: "/logout" }];
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const bottomNavItems = [{ label: "Log out", path: "/login" }];
+  const handleLogout = async () => {
+    try {
+      await dispatch(logOut()).unwrap();
+    } finally {
+      // التنقّل دائماً بعد محاولة اللوج آوت
+      navigate("/login", { replace: true });
+    }
+  };
   return (
     <aside className="fixed top-0 left-0 h-screen w-[225px] bg-white shadow-md p-6 flex flex-col justify-between z-20">
       <div>
@@ -50,9 +60,9 @@ export default function SideBar() {
         {/* Navigation - Bottom */}
         <nav className="space-y-3">
           {bottomNavItems.map((item, index) => (
-            <NavLink
+            <button
               key={index}
-              to={item.path}
+              onClick={handleLogout}
               className={({ isActive }) =>
                 `block px-3 py-1 rounded-md transition text-lg font-['Cairo'] ${
                   isActive
@@ -62,7 +72,7 @@ export default function SideBar() {
               }
             >
               {item.label}
-            </NavLink>
+            </button>
           ))}
         </nav>
       </div>

@@ -64,14 +64,14 @@ export default function HomePage() {
         settings={settings}
       />
       <OffersSlider settings1={settings1} offers={offers} />
-      <ArticalsSlider
+      {/* <ArticalsSlider
         settings2={settings2}
         sliderRef1={sliderRef1}
         articels={articels}
         prevSlide1={prevSlide1}
         currentIndex1={currentIndex1}
         nextSlide1={nextSlide1}
-      />
+      /> */}
       <PatientsFeedPacks
         Autoplay={Autoplay}
         Pagination={Pagination}

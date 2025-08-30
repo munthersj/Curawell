@@ -1,0 +1,65 @@
+// features/data/dataSlice.js
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import axios from "axios";
+import axiosInstanceR from "../../../config/axiosIntanceR";
+// async thunk لطلب البيانات
+export const fetchRadiograohys = createAsyncThunk(
+  "data/dashboard/fetchRadiograohys",
+  async () => {
+    const response = await axiosInstanceR.get(
+      "/dashboard/patients/skiagraph_orders"
+    );
+
+    return response.data;
+  }
+);
+export const fetchAnalyses = createAsyncThunk(
+  "data/dashboard/fetchAnalyses",
+  async () => {
+    const response = await axiosInstanceR.get("/dashboard/patient/analyses");
+
+    return response.data;
+  }
+);
+
+const documentsSlice = createSlice({
+  name: "documentsSlice",
+  initialState: {
+    analyses: [],
+    radiograhy: [],
+
+    status: "idle", // idle | loading | succeeded | failed
+    status1: "idle", // idle | loading | succeeded | failed
+    error: null,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRadiograohys.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRadiograohys.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log(action.payload.data);
+        state.radiograhy = action.payload.data;
+      })
+      .addCase(fetchRadiograohys.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+
+    builder
+      .addCase(fetchAnalyses.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAnalyses.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.analyses = action.payload.data;
+      })
+      .addCase(fetchAnalyses.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default documentsSlice.reducer;

@@ -2,12 +2,16 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useServicesSection from "../../hooks/useServicesSection";
-
+import { useNavigate } from "react-router-dom";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ServicesSection({ cards }) {
   const { sectionRef, cardRefs } = useServicesSection(cards);
 
+  const navigate = useNavigate();
+  const handleCLick = () => {
+    navigate("/login");
+  };
   // const cards1 = cards;
   // console.log(cards[0]);
   return (
@@ -33,7 +37,10 @@ export default function ServicesSection({ cards }) {
               {card.brief_description_en}
             </p>
             <div className="flex w-full justify-center sm:justify-start my-3 sm:mt-10">
-              <button className="bg-curawell text-grayc text-xs sm:text-lg px-2 py-1 sm:px-6 sm:py-2 rounded-full hover:cursor-pointer shadow-lg shadow-gray-500/50 hover:shadow-xl hover:shadow-gray-500/60  hover:-translate-y-1  transition-all duration-300">
+              <button
+                onClick={handleCLick}
+                className="bg-curawell text-grayc text-xs sm:text-lg px-2 py-1 sm:px-6 sm:py-2 rounded-full hover:cursor-pointer shadow-lg shadow-gray-500/50 hover:shadow-xl hover:shadow-gray-500/60  hover:-translate-y-1  transition-all duration-300"
+              >
                 Arrange a Consultation
               </button>
             </div>

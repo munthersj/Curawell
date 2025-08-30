@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Card from "./Card";
 import CardLarge from "./CardLarge";
+import { useNavigate } from "react-router-dom";
 export default function AbsoiluteDiv({ data }) {
   function normalizeKey(s = "") {
     return s.toLowerCase().replace(/\s+/g, "");
@@ -16,9 +17,9 @@ export default function AbsoiluteDiv({ data }) {
 
   // نلقط العناصر المطلوبة بالاسم أو النوع (مع فواصل/مسافات مختلفة)
   const lab = get("Laboratory");
-  const radio = get("Radiography") || get("Radiology");
+  // const radio = get("Radiography") || get("Radiology");
   const homeCare = get("HomeCare") || get("Home care");
-  const emergency = get("Emergency");
+  // const emergency = get("Emergency");
   const clinics = get("Clinic") || get("Clinics");
   function indexByNameOrType(arr = []) {
     const map = {};
@@ -28,6 +29,7 @@ export default function AbsoiluteDiv({ data }) {
     });
     return (key) => map[normalizeKey(key)];
   }
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-center relative w-full mt-10 sm:mt-0 ">
       <img
@@ -37,18 +39,23 @@ export default function AbsoiluteDiv({ data }) {
       />
 
       {/* Small Container Over Image */}
-      <div className="sm:absolute  sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:translate-y-1/2 w-screen sm:w-9/12 bg-grayc text-black px-4 sm:px-8 pt-5 sm:pt-7 pb-6 rounded-lg shadow-lg">
+      <div className="sm:absolute  sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:translate-y-1/2 w-screen sm:w-7/12 bg-grayc text-black px-4 sm:px-8 pt-5 sm:pt-7 pb-6 rounded-lg shadow-lg">
         {/* First Row */}
         <div className="flex flex-row items-start sm:items-center justify-between w-full gap-4">
           <h1 className="text-2xl sm:text-3xl font-cairo font-bold">
             How Can We Help?
           </h1>
-          <button className="bg-curawell text-white text-sm sm:text-base rounded-3xl px-4 py-2 hover:bg-gray-400 transition">
+          <button
+            onClick={() => {
+              navigate("/appointments");
+            }}
+            className="bg-curawell text-white text-sm sm:text-base rounded-3xl px-4 py-2 hover:bg-gray-400 transition"
+          >
             Schedule Appointment
           </button>
         </div>
         {/* Search */}
-        <div className="w-3/4 flex items-center pt-5">
+        {/* <div className="w-3/4 flex items-center pt-5">
           <div className="relative w-full">
             <input
               type="text"
@@ -57,13 +64,13 @@ export default function AbsoiluteDiv({ data }) {
             />
             <Search className="absolute right-2 top-1/2 -translate-y-1/2 text-curawell" />
           </div>
-        </div>
+        </div> */}
         {/* Cards Section */}
 
         {lab && (
-          <div className="flex flex-col lg:flex-row flex-wrap gap-10 pt-5">
+          <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-10 pt-5">
             {/* Card Group 1 (صغيرين عمودياً) */}
-            <div className="flex flex-col gap-4 w-full sm:w-auto">
+            {/* <div className="flex flex-col gap-4 w-full sm:w-auto">
               <Card
                 icon={<FlaskConical size={38} className="text-blimo mt-2" />}
                 title={lab.name_en}
@@ -74,7 +81,7 @@ export default function AbsoiluteDiv({ data }) {
                 title={radio?.name_en ?? "Radiology"}
                 payload={radio}
               />
-            </div>
+            </div> */}
 
             {/* Other Cards (الكبيرة) */}
             <CardLarge
@@ -83,12 +90,12 @@ export default function AbsoiluteDiv({ data }) {
               description="trusted care, right at home"
               payload={homeCare} // نخزّن كامل العنصر
             />
-            <CardLarge
+            {/* <CardLarge
               icon={<Siren size={52} className="text-blimo mt-2" />}
               title={emergency?.name_en ?? "Emergency"}
               description="emergency care, anytime"
               payload={emergency}
-            />
+            /> */}
             <CardLarge
               icon={<Hospital size={52} className="text-blimo mt-2" />}
               title={clinics?.name_en ?? "Clinics"}

@@ -150,7 +150,7 @@ export const fetchLHomeCareComments = createAsyncThunk(
   "data/cosmeticClinics/fetchLHomeCareComments",
   async (data) => {
     const response = await axiosInstance.post("/get_comments", data);
-
+    // console.log(response.data);
     return response.data;
   }
 );

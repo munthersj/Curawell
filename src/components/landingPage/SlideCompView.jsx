@@ -97,7 +97,7 @@ export default function SlideCompView({ comments }) {
             <div className="flex flex-col items-center justify-center bg-transparent px-4 py-8 min-h-screen">
               <Quote size={24} className="mb-2 text-gray-600" />
               <p className="text-center text-lg sm:text-lg md:text-2xl text-gray-700 font-cairo w-70 sm:w-full sm:max-w-2xl pb-15 sm:pb-5">
-                {d.comment_en}
+                {d.comment}
               </p>
               <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full overflow-hidden mb-4">
                 <img

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu } from "lucide-react";
 import useNavBar from "../hooks/useNavBar";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 export default function NavBar() {
   const {
     listIsClicked,
@@ -14,7 +15,7 @@ export default function NavBar() {
     clinics,
     handleClinicClick,
   } = useNavBar();
-
+  const navigate = useNavigate();
   function handleServiceClick() {
     setListIsClicked({
       service: !listIsClicked.service,
@@ -209,7 +210,7 @@ export default function NavBar() {
             </li>
             {/* Clincis */}
             {/* Our Team */}
-            <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300">
+            {/* <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300">
               <div className="flex items-center ">
                 <span className="transition-all duration-300 mr-3">
                   Our Team
@@ -250,7 +251,7 @@ export default function NavBar() {
                   </ul>
                 </div>
               </div>
-            </li>
+            </li> */}
             {/* Our Team */}
             {/* About Us */}
             <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300">
@@ -262,7 +263,7 @@ export default function NavBar() {
                   <ChevronRight />
                 </div>
                 <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div>
-                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute left-0  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
+                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute left-0   group-hover:-bottom-15 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
                     <li className="relative flex justify-center px-8 py-5 hover:shadow-2xs bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
                       <a
@@ -270,10 +271,10 @@ export default function NavBar() {
                         href="#"
                         target="_blank"
                       >
-                        Groups
+                        Contact US
                       </a>
                     </li>
-                    <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
+                    {/* <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
                       <a
                         className="text-[16px] font-normal"
                         href="#"
@@ -290,8 +291,8 @@ export default function NavBar() {
                       >
                         Begin
                       </a>
-                    </li>
-                    <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
+                    </li> */}
+                    {/* <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
                       <a
                         className="text-[16px] font-normal"
                         href="#"
@@ -299,7 +300,7 @@ export default function NavBar() {
                       >
                         Wishes
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -311,7 +312,12 @@ export default function NavBar() {
         {/* Nav List */}
         {/* Sign-up-Button */}
         <div className="hidden sm:flex w-1/6 justify-center items-center ">
-          <button className="sign-up-b ">
+          <button
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+            className="sign-up-b "
+          >
             <span className="relative z-10">Your Dashboard</span>
           </button>
         </div>

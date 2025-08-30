@@ -92,7 +92,7 @@ export default function NotFoundPage() {
             transition={{ delay: 0.35, duration: 0.5 }}
             className="mb-2 text-2xl font-cairo font-semibold text-neutral-900 "
           >
-            الصفحة التي تبحث عنها غير موجودة
+            Page Not Found
           </motion.h1>
 
           <motion.p
@@ -101,8 +101,7 @@ export default function NotFoundPage() {
             transition={{ delay: 0.45, duration: 0.5 }}
             className="mb-8 max-w-prose font-cairo text-neutral-600 "
           >
-            قد تكون العنوان خاطئًا أو تم نقل الصفحة أو حذفها. تقدر ترجع للصفحة
-            الرئيسية أو العودة للصفحة السابقة.
+            Might be a wrong route
           </motion.p>
 
           {/* Actions */}
@@ -116,13 +115,13 @@ export default function NotFoundPage() {
               to="/"
               className="inline-flex items-center font-cairo justify-center rounded-xl bg-[#972f6a] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#972f6a]/20 transition hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-[#972f6a]/30"
             >
-              الذهاب للرئيسية
+              Go to Main
             </Link>
             <button
               onClick={() => navigate(-1)}
               className="inline-flex items-center font-cairo justify-center rounded-xl border border-neutral-300 bg-white px-5 py-3 text-sm font-semibold text-neutral-800 transition hover:bg-neutral-50 focus:outline-none focus:ring-4 focus:ring-neutral-200 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800"
             >
-              العودة للخلف
+              Go Back
             </button>
           </motion.div>
 

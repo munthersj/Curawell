@@ -1,6 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function QuickForm() {
+  const navigate = useNavigate();
+  const handleCLick = () => {
+    navigate("/login");
+  };
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -35,7 +41,7 @@ export default function QuickForm() {
   return (
     <div className="absolute sm:hover:-top-65 top-80 sm:-top-60 right-0 sm:right-70 w-full sm:w-[42rem] bg-white shadow-xl hover:shadow-2xl shadow-gray-600/60 rounded-xl  sm:px-10 sm:py-10 transition-all duration-300">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleCLick}
         className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8  sm:gap-y-12"
       >
         {/* Name */}
@@ -49,7 +55,6 @@ export default function QuickForm() {
             value={form.name}
             onChange={handleChange}
             className="w-full rounded-md border border-gray-300 px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-gray-300"
-            required
           />
         </label>
 
@@ -63,7 +68,6 @@ export default function QuickForm() {
             value={form.email}
             onChange={handleChange}
             className="w-full rounded-md border border-gray-300 px-4 py-3 placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-gray-300"
-            required
           />
         </label>
 

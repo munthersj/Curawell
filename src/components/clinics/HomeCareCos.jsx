@@ -38,7 +38,7 @@ export default function HomeCareCos() {
       ));
     }
   }, [logic.status2, error, logic.message1]);
-  // console.log(logic.comments);
+  // console.log(JSON.stringify(logic.comments));
   return logic.status == "loading" ||
     logic.status2 == "loading" ||
     !logic.sectionData ? (

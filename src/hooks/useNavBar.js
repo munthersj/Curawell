@@ -27,21 +27,11 @@ export default function useNavBar() {
       navigate("/clinicsPage");
     }
     if (section.name_en == "HomeCare") {
-      navigate("/homeCare", {
-        state: {
-          service_id: section.id,
-          details: section.brief_description_en,
-        },
-      });
+      navigate(`/homeCare/${section.id}`);
     }
   };
   const handleClinicClick = (clinic) => {
-    navigate("/cosmeticClinic", {
-      state: {
-        sectionId: clinic.id,
-        details: clinic.details_services_en,
-      },
-    });
+    navigate(`/cosmeticClinic/${clinic.id}`);
   };
 
   return {

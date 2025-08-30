@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // src/components/userDashboard/profile.jsx
 
 import SideBar from "../SideBar";
@@ -8,7 +9,31 @@ import DoctorsCard from "./Dashboard/DoctorsCard";
 import AppointmentsCard from "./Dashboard/AppointmentsCard";
 import PatientInfoCard from "./Dashboard/PatientInfoCard";
 
+import useUserDashboard from "../../hooks/useUserDashboard";
+import LogoLoader from "../LogoLoader";
+
 export default function Profile() {
+  const {
+    sessions,
+    status,
+    doctors,
+    getImage,
+    status1,
+    appointments,
+    status4,
+    profileData,
+    isEditing,
+    formData,
+    handleChange,
+    formatList,
+    toggleEdit,
+    scrollRef,
+    activeTab,
+    setActiveTab,
+    saveStatus,
+    getStatusStyle,
+  } = useUserDashboard();
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background Layer */}
@@ -40,25 +65,45 @@ export default function Profile() {
           >
             {/* Top Cards */}
             <div style={{ gridColumn: "1", gridRow: "1" }}>
-              <MedicationsCard />
+              <MedicationsCard sessions={sessions} status={status} />
             </div>
 
             <div style={{ gridColumn: "2", gridRow: "1" }}>
-              <DiagnosisCard />
+              <DiagnosisCard sessions={sessions} status={status} />
             </div>
 
             <div style={{ gridColumn: "3", gridRow: "1" }}>
-              <DoctorsCard />
+              <DoctorsCard
+                doctors={doctors}
+                status={status1}
+                getImage={getImage}
+              />
             </div>
 
             {/* بطاقة المريض تمتد على الصفين */}
             <div className="grid-cols-4 grid-rows-1 row-span-2 ml-[9px] ">
-              <PatientInfoCard />
+              <PatientInfoCard
+                status={status1}
+                profileData={profileData}
+                isEditing={isEditing}
+                formData={formData}
+                handleChange={handleChange}
+                formatList={formatList}
+                toggleEdit={toggleEdit}
+                scrollRef={scrollRef}
+                saveStatus={saveStatus}
+              />
             </div>
 
             {/* Bottom Cards */}
             <div style={{ gridColumn: "1 / span 3", gridRow: "2" }}>
-              <AppointmentsCard />
+              <AppointmentsCard
+                apiData={appointments}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                getStatusStyle={getStatusStyle}
+                status={status}
+              />
             </div>
           </div>
         </div>

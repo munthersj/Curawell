@@ -24,7 +24,7 @@ export default function ClinicsSections({ clinics }) {
   return (
     <div className="bg-[#8f2a64] h-[500px] mt-10 rounded-2xl relative flex  items-center justify-center p-8 mb-52">
       <h1 className="text-white text-2xl font-cairo font-bold absolute left-60 top-30">
-        Highlight <br /> the benefits of working <br /> with your company
+        Highlight <br /> The best sections <br /> In our site
       </h1>
       <div className="grid grid-cols-3 grid-rows-2 gap-6 max-w-6xl items-center  ">
         {/* Card 1 - Top Left */}
@@ -59,12 +59,7 @@ export default function ClinicsSections({ clinics }) {
         {/* Card 2 - Top Middle */}
         <motion.div
           onClick={() => {
-            navigate("/cosmeticClinic", {
-              state: {
-                sectionId: visibleCards[1].id,
-                details: visibleCards[1].details_services_en,
-              },
-            });
+            navigate(`/cosmeticClinic/${visibleCards[1].id}`);
           }}
           key={visibleCards[1].id}
           className="bg-white p-6 rounded-lg shadow-lg absolute top-10 right-80 hover:top-5 transition-all duration-300"
@@ -93,12 +88,7 @@ export default function ClinicsSections({ clinics }) {
         {/* Card 4 - Top Right */}
         <motion.div
           onClick={() => {
-            navigate("/cosmeticClinic", {
-              state: {
-                sectionId: visibleCards[3].id,
-                details: visibleCards[3].details_services_en,
-              },
-            });
+            navigate(`/cosmeticClinic/${visibleCards[3].id}`);
           }}
           key={visibleCards[3].id}
           className="bg-white p-6 rounded-lg shadow-lg absolute top-105 right-80 hover:top-100 transition-all duration-300"
@@ -130,12 +120,7 @@ export default function ClinicsSections({ clinics }) {
         {/* Card 3 - Bottom Middle */}
         <motion.div
           onClick={() => {
-            navigate("/cosmeticClinic", {
-              state: {
-                sectionId: visibleCards[2].id,
-                details: visibleCards[2].details_services_en,
-              },
-            });
+            navigate(`/cosmeticClinic/${visibleCards[2].id}`);
           }}
           key={visibleCards[2].id}
           className="bg-white p-6 rounded-lg shadow-lg absolute top-110 left-150 hover:top-105 transition-all duration-300 "
@@ -164,12 +149,7 @@ export default function ClinicsSections({ clinics }) {
         {/* Card 5 - Bottom Right */}
         <motion.div
           onClick={() => {
-            navigate("/cosmeticClinic", {
-              state: {
-                sectionId: visibleCards[4].id,
-                details: visibleCards[4].details_services_en,
-              },
-            });
+            navigate(`/cosmeticClinic/${visibleCards[4].id}`);
           }}
           key={visibleCards[4].id}
           className="bg-white p-6 rounded-lg shadow-lg absolute top-80 left-75 hover:top-75 transition-all duration-300"

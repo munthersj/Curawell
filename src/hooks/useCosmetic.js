@@ -37,7 +37,9 @@ export function useCosmetic(sectionId) {
     message1,
     doctors1,
     offers,
+    // sections,
   } = useSelector((s) => s.cosmeticData);
+  // const sectionData = sections.find((s) => s.id == sectionId);
 
   const { clinics } = useSelector((s) => s.clinicsData);
   // console.log(keyServices);
@@ -372,7 +374,7 @@ export function useCosmetic(sectionId) {
     handleSelect1,
     handelSubmit,
     resetForm,
-
+    // sectionData,
     // actions (لو بدك تستخدمهم خارجيًا)
     resetAction: () => dispatch(reset()),
   };

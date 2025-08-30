@@ -55,10 +55,10 @@ export default function ContactUsPage() {
   //   setName(""); setPhone(""); setMessage(""); setTouched({ name:false, phone:false, message:false });
   //   dispatch(resetSubmitState());
   // }
-  const handlePick = ({ lat, lon, address }) => {
-    // مثال: dispatch(updateLocation({ lat, lon, address }))
-    console.log(lat, lon, address);
-  };
+  // const handlePick = ({ lat, lon, address }) => {
+  //   // مثال: dispatch(updateLocation({ lat, lon, address }))
+  //   console.log(lat, lon, address);
+  // };
   return (
     <div className="w-full">
       {/* Hero */}
@@ -243,7 +243,7 @@ export default function ContactUsPage() {
       <div className="mt-16">
         <div className="w-full mt-8">
           <ClinicMap
-            lat={33.5138}
+            lat={40.5138}
             lon={36.2765}
             zoom={15}
             className="rounded-xl"
@@ -255,9 +255,9 @@ export default function ContactUsPage() {
         {/* Map / Location */}
         {/* </div>
         </div> */}
-        <div className="max-w-4xl mx-auto">
+        {/* <div className="max-w-4xl mx-auto">
           <LocationPicker onChange={handlePick} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

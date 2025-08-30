@@ -1,20 +1,18 @@
-import React from "react";
+// const collectedPoints = [
+//   // Example: leave empty to test message []
+//   { date: "24, Nov Tue", source: "Online reservation", points: 40 },
+//   { date: "23, Nov Mon", source: "Clinic Visit", points: 25 },
+//   { date: "22, Nov Sun", source: "Home Care Booking", points: 30 },
+// ];
 
-const collectedPoints = [
-  // Example: leave empty to test message []
-  { date: "24, Nov Tue", source: "Online reservation", points: 40 },
-  { date: "23, Nov Mon", source: "Clinic Visit", points: 25 },
-  { date: "22, Nov Sun", source: "Home Care Booking", points: 30 },
-];
-
-const exchangedPoints = [
-  // Example: leave empty to test message []
-  /*{ date: "24, Nov Tue", exchangeWith: "Online reservation", points: 40 },
-  { date: "23, Nov Mon", exchangeWith: "Gift Card", points: 25 },
-  { date: "22, Nov Sun", exchangeWith: "Voucher", points: 30 },*/
-];
-
-export default function PointsHistoryTable() {
+// const exchangedPoints = [
+//   // Example: leave empty to test message []
+//   /*{ date: "24, Nov Tue", exchangeWith: "Online reservation", points: 40 },
+//   { date: "23, Nov Mon", exchangeWith: "Gift Card", points: 25 },
+//   { date: "22, Nov Sun", exchangeWith: "Voucher", points: 30 },*/
+// ];
+import LogoLoader from "../../LogoLoader";
+export default function PointsHistoryTable({ pointsD, pointsE, status }) {
   return (
     <div className="bg-[#F3F4F6] p-6 flex flex-col md:flex-row gap-6">
       {/* Collected Points Table */}
@@ -22,13 +20,17 @@ export default function PointsHistoryTable() {
         <h2 className="text-[#972F6AFF] font-bold text-lg mb-4">
           Collected Points
         </h2>
-        <div className="bg-white rounded-2xl shadow-md w-full overflow-hidden">
-          {collectedPoints.length === 0 ? (
+        <div className="bg-white rounded-2xl shadow-md w-full overflow-auto h-[300px] no-scrollbar">
+          {status == "loading" || pointsD == undefined ? (
+            <div className="flex items-center w-full h-full justify-center">
+              <LogoLoader size={42} speed={1.2} />
+            </div>
+          ) : pointsD.length === 0 ? (
             <div className="p-4 text-center text-gray-400 font-semibold">
               No points collected
             </div>
           ) : (
-            collectedPoints.map((row, index) => (
+            pointsD.map((row, index) => (
               <div
                 key={index}
                 className="grid grid-cols-3 gap-6 p-4 border-b border-gray-200 last:border-0"
@@ -36,14 +38,14 @@ export default function PointsHistoryTable() {
                 <div>
                   <p className="text-xs text-gray-400">Date</p>
                   <p className="text-sm font-semibold text-gray-900">
-                    {row.date}
+                    {row.history}
                   </p>
                 </div>
 
                 <div>
                   <p className="text-xs text-gray-400">Source</p>
                   <p className="text-sm font-semibold text-gray-900">
-                    {row.source}
+                    {row.reason}
                   </p>
                 </div>
 
@@ -51,7 +53,7 @@ export default function PointsHistoryTable() {
                   <p className="text-xs text-gray-400">Points</p>
                   <p className="text-sm font-semibold text-[#972F6AFF]">
                     <span className="font-semibold text-[#972F6AFF]">
-                      {row.points}
+                      {row.point_number}
                     </span>{" "}
                     points
                   </p>
@@ -68,12 +70,16 @@ export default function PointsHistoryTable() {
           Exchanged Points
         </h2>
         <div className="bg-white rounded-2xl shadow-md w-full overflow-hidden">
-          {exchangedPoints.length === 0 ? (
+          {status == "loading" || pointsE == undefined ? (
+            <div className="flex items-center w-full h-full justify-center">
+              <LogoLoader size={42} speed={1.2} />
+            </div>
+          ) : pointsE.length === 0 ? (
             <div className="p-4 text-center text-gray-400 font-semibold">
               No exchanged points
             </div>
           ) : (
-            exchangedPoints.map((row, index) => (
+            pointsE.map((row, index) => (
               <div
                 key={index}
                 className="grid grid-cols-3 gap-6 p-4 border-b border-gray-200 last:border-0"
@@ -81,14 +87,14 @@ export default function PointsHistoryTable() {
                 <div>
                   <p className="text-xs text-gray-400">Date</p>
                   <p className="text-sm font-semibold text-gray-900">
-                    {row.date}
+                    {row.replacement_time}
                   </p>
                 </div>
 
                 <div>
                   <p className="text-xs text-gray-400">exchange with</p>
                   <p className="text-sm font-semibold text-gray-900">
-                    {row.exchangeWith}
+                    {row.reason}
                   </p>
                 </div>
 
@@ -96,7 +102,7 @@ export default function PointsHistoryTable() {
                   <p className="text-xs text-gray-400">Points</p>
                   <p className="text-sm font-semibold text-[#972F6AFF]">
                     <span className="font-semibold text-[#972F6AFF]">
-                      {row.points}
+                      {row.replace_point_num}
                     </span>{" "}
                     points
                   </p>

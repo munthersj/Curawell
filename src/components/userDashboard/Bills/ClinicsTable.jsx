@@ -1,208 +1,61 @@
-// eslint-disable-next-line no-unused-vars
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const bills = [
-  {
-    type: "individual",
-    totalBill: "50000 SP",
-    department: "Cardiology",
-    details: {
-      date: "24 Nov",
-      time: "3PM",
-      doctor: "Dr A",
-      billId: "#1",
-      notes: "–",
-    },
-    subBills: [],
-  },
-  {
-    type: "multiple",
-    totalBill: "40000 SP",
-    department: "Neurology",
-    details: {},
-    subBills: [
-      {
-        date: "25 Nov",
-        time: "10AM",
-        doctor: "Dr B",
-        billId: "#2",
-        paidBill: "20000 SP",
-        extraBill: "5000 SP",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-      {
-        date: "26 Nov",
-        time: "11AM",
-        doctor: "Dr C",
-        billId: "#3",
-        paidBill: "15000 SP",
-        extraBill: "0",
-        notes: "-",
-      },
-    ],
-  },
-  {
-    type: "individual",
-    totalBill: "50000 SP",
-    department: "Cardiology",
-    details: {
-      date: "24 Nov",
-      time: "3PM",
-      doctor: "Dr A",
-      billId: "#1",
-      notes: "–",
-    },
-    subBills: [],
-  },
-  {
-    type: "individual",
-    totalBill: "50000 SP",
-    department: "Cardiology",
-    details: {
-      date: "24 Nov",
-      time: "3PM",
-      doctor: "Dr A",
-      billId: "#1",
-      notes: "–",
-    },
-    subBills: [],
-  },
-  {
-    type: "individual",
-    totalBill: "50000 SP",
-    department: "Cardiology",
-    details: {
-      date: "24 Nov",
-      time: "3PM",
-      doctor: "Dr A",
-      billId: "#1",
-      notes: "–",
-    },
-    subBills: [],
-  },
-];
+function parseMoney(s) {
+  const n = Number.parseFloat(s ?? "0");
+  return Number.isFinite(n) ? n : 0;
+}
 
-export default function ClinicsTable() {
+export default function ClinicsTable({ items = [] }) {
   const [expandedRows, setExpandedRows] = useState({});
 
   const toggleRow = (index) => {
     setExpandedRows((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
-  const parseBill = (bill) => parseInt(bill.replace(/[^0-9]/g, "")) || 0;
+  const data = useMemo(() => {
+    return Array.isArray(items) ? items.slice() : [];
+  }, [items]);
 
   return (
-    <div className="  flex items-center justify-center p-6">
+    <div className="flex items-center justify-center p-6">
       <div className="bg-white rounded-2xl shadow-md w-full max-w-full overflow-hidden">
-        {bills.map((bill, index) => {
-          const { type, totalBill, department, details, subBills } = bill;
+        {data.map((bill, index) => {
+          const total = parseMoney(bill.total_bill);
+          const paid = parseMoney(bill.paid_of_bill);
+          const expanded = expandedRows[index];
 
-          const totalWithExtras =
-            type === "multiple"
-              ? parseBill(totalBill) +
-                subBills.reduce(
-                  (acc, b) => acc + parseBill(b.extraBill || "0"),
-                  0
-                )
-              : parseBill(totalBill);
-
-          const totalPaid =
-            type === "multiple"
-              ? subBills.reduce((acc, b) => acc + parseBill(b.paidBill), 0)
-              : parseBill(totalBill);
-
-          const status =
-            type === "individual"
-              ? "Paid"
-              : totalPaid === totalWithExtras
-              ? "Paid"
-              : "UnPaid";
-
-          const statusStyles =
-            status === "Paid"
+          const statusColor =
+            (bill.status || "").toLowerCase() === "complete" || paid >= total
               ? "bg-[#24A99C38] text-[#24A99CFF]"
               : "bg-[#972F6A38] text-[#972F6AFF]";
 
-          const expanded = expandedRows[index];
+          // اجمع أقسام المواعيد ضمن الفاتورة
+          const deps = (bill.bill_appointments ?? [])
+            .map((a) => (a?.department || "").trim())
+            .filter(Boolean);
+
+          const uniqueDeps = Array.from(new Set(deps));
+          let deptLabel = "—";
+          if (uniqueDeps.length === 1) {
+            deptLabel = uniqueDeps[0];
+          } else if (uniqueDeps.length > 1) {
+            // بتقدر تغيّر التنسيق هون إذا بتحب كلمة "Multiple"
+            // مثال بديل: `${uniqueDeps[0]} +${uniqueDeps.length - 1}`
+            deptLabel = "Multiple";
+          }
+
+          // أول موعد (للاستعراض داخل الإكسباند)
+          const appt = bill.bill_appointments?.[0];
 
           return (
-            <div key={index} className="border-b border-gray-200">
+            <div
+              key={bill.bill_id ?? index}
+              className="border-b border-gray-200"
+            >
               {/* Main Row */}
               <div
-                className={`grid grid-cols-5 gap-4 px-6 py-4 cursor-pointer transition-colors duration-200 ${
+                className={`grid grid-cols-6 gap-4 px-6 py-4 cursor-pointer transition-colors duration-200 ${
                   expanded
                     ? "bg-gray-50 border-l-4 border-[#24A99CFF]"
                     : "bg-white"
@@ -213,9 +66,7 @@ export default function ClinicsTable() {
                 <div>
                   <p className="text-xs text-gray-400">Total Bill</p>
                   <p className="text-sm font-semibold text-gray-800">
-                    {type === "multiple"
-                      ? totalWithExtras.toLocaleString() + " SP"
-                      : totalBill}
+                    {total.toLocaleString()} SP
                   </p>
                 </div>
 
@@ -223,17 +74,23 @@ export default function ClinicsTable() {
                 <div>
                   <p className="text-xs text-gray-400">Paid Bill</p>
                   <p className="text-sm font-semibold text-gray-800">
-                    {type === "multiple"
-                      ? totalPaid.toLocaleString() + " SP"
-                      : totalBill}
+                    {paid.toLocaleString()} SP
                   </p>
                 </div>
 
-                {/* Department */}
+                {/* Doctor */}
+                <div>
+                  <p className="text-xs text-gray-400">Doctor</p>
+                  <p className="text-sm font-semibold text-gray-800">
+                    {bill.doctor_name || "—"}
+                  </p>
+                </div>
+
+                {/* Department — خارج الإكسباند */}
                 <div>
                   <p className="text-xs text-gray-400">Department</p>
                   <p className="text-sm font-semibold text-gray-800">
-                    {department}
+                    {deptLabel}
                   </p>
                 </div>
 
@@ -241,14 +98,14 @@ export default function ClinicsTable() {
                 <div>
                   <p className="text-xs text-gray-400">Status</p>
                   <span
-                    className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${statusStyles}`}
+                    className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${statusColor}`}
                   >
-                    {status}
+                    {bill.status || (paid >= total ? "Complete" : "Incomplete")}
                   </span>
                 </div>
 
                 {/* Action */}
-                <button className="flex items-center space-x-2 h-8 px-3 py-0.5 text-xs font-medium rounded-3xl bg-gray-100 text-gray-600 hover:bg-gray-200 transition ml-auto">
+                <button className="flex items-center justify-end space-x-2 h-8 px-3 py-0.5 text-xs font-medium rounded-3xl bg-gray-100 text-gray-600 hover:bg-gray-200 transition ml-auto">
                   <span>{expanded ? "See Less" : "See More"}</span>
                   {expanded ? (
                     <ChevronUp size={14} className="text-gray-500" />
@@ -261,97 +118,78 @@ export default function ClinicsTable() {
               {/* Expanded Panel */}
               {expanded && (
                 <div className="bg-[#f5f5f558] px-6 py-4 space-y-6 border-t border-gray-100">
-                  {type === "individual" ? (
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <div>
-                          <p className="text-xs text-gray-400">Date</p>
-                          <p className="text-sm text-gray-800">
-                            {details.date}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-400">Time</p>
-                          <p className="text-sm text-gray-800">
-                            {details.time || "–"}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-400">Doctor</p>
-                          <p className="text-sm text-gray-800">
-                            {details.doctor || "–"}
-                          </p>
-                        </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs text-gray-400">Bill #</p>
+                        <p className="text-sm font-semibold text-[#972F6AFF]">
+                          {bill.bill_num ?? `#${bill.bill_id}`}
+                        </p>
                       </div>
-                      <div className="space-y-2">
-                        <div>
-                          <p className="text-xs text-gray-400">Bill ID</p>
-                          <p className="text-sm font-semibold text-[#972F6AFF]">
-                            {details.billId || "–"}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-400">
-                            Doctor/Nurse Notes
-                          </p>
-                          <p className="text-sm text-gray-800">
-                            {details.notes || "–"}
-                          </p>
-                        </div>
+
+                      <div>
+                        <p className="text-xs text-gray-400">
+                          Appointments Count
+                        </p>
+                        <p className="text-sm text-gray-800">
+                          {bill.bill_appointments?.length ?? 0}
+                        </p>
                       </div>
                     </div>
-                  ) : (
-                    subBills.map((sub, i) => (
-                      <div
-                        key={i}
-                        className="grid grid-cols-3 gap-6 border-t first:border-t-0 pt-4"
-                      >
-                        <div className="space-y-2">
+
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs text-gray-400">
+                          Primary Department
+                        </p>
+                        <p className="text-sm text-gray-800">
+                          {appt?.department || "—"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400">First Date/Time</p>
+                        <p className="text-sm text-gray-800">
+                          {appt ? `${appt.date} ${appt.time}` : "—"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Appointments list */}
+                  {!!bill.bill_appointments?.length && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-gray-500">Appointments</p>
+                      {bill.bill_appointments.map((a) => (
+                        <div
+                          key={a.appointment_bill_id}
+                          className="grid grid-cols-4 gap-4 p-3 bg-white rounded-xl border"
+                        >
+                          <div>
+                            <p className="text-xs text-gray-400">Department</p>
+                            <p className="text-sm font-medium text-gray-800">
+                              {a.department}
+                            </p>
+                          </div>
                           <div>
                             <p className="text-xs text-gray-400">Date</p>
-                            <p className="text-sm text-gray-800">{sub.date}</p>
+                            <p className="text-sm text-gray-800">{a.date}</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-400">Time</p>
-                            <p className="text-sm text-gray-800">{sub.time}</p>
+                            <p className="text-sm text-gray-800">{a.time}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-400">Doctor</p>
+                            <p className="text-xs text-gray-400">
+                              Paid / Total
+                            </p>
                             <p className="text-sm text-gray-800">
-                              {sub.doctor}
+                              {parseMoney(a.paid_bill).toLocaleString()} /{" "}
+                              {parseMoney(a.total_bill).toLocaleString()} SP
                             </p>
                           </div>
                         </div>
-                        <div className="space-y-2">
-                          <div>
-                            <p className="text-xs text-gray-400">Bill ID</p>
-                            <p className="text-sm font-semibold text-[#972F6AFF]">
-                              {sub.billId}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-400">Paid Bill</p>
-                            <p className="text-sm text-gray-800">
-                              {sub.paidBill}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-400">Extra Bill</p>
-                            <p className="text-sm text-gray-800">
-                              {sub.extraBill || "–"}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-xs text-gray-400">
-                            Doctor/Nurse Notes
-                          </p>
-                          <p className="text-sm text-gray-800">
-                            {sub.notes || "–"}
-                          </p>
-                        </div>
-                      </div>
-                    ))
+                      ))}
+                    </div>
                   )}
                 </div>
               )}

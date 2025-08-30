@@ -1,11 +1,43 @@
-import useUserDashboardSlice from "../../../hooks/useUserDashboard";
+import { useMemo } from "react";
+import LogoLoader from "../../LogoLoader";
+export default function AppointmentsCard({
+  apiData,
+  activeTab,
+  setActiveTab,
+  status,
+  getStatusStyle,
+}) {
+  // دمج العيادة + الهوم كير، وتطبيق فلترة التاب: upcoming=>future, past=>don
+  const displayAppointments = useMemo(() => {
+    if (!apiData || !apiData.appointments) return [];
 
-export default function AppointmentsCard() {
-  const { activeTab, setActiveTab, appointments, getStatusStyle } =
-    useUserDashboardSlice();
+    const key = activeTab === "upcoming" ? "future" : "don";
+
+    const clinic =
+      (apiData.appointments.appointment_clinic &&
+        apiData.appointments.appointment_clinic[key]) ||
+      [];
+
+    const homeCare =
+      (apiData.appointments.appointment_homeCare &&
+        apiData.appointments.appointment_homeCare[key]) ||
+      [];
+
+    const normalize = (a = {}) => ({
+      date: a.date || "",
+      time: a.time || "",
+      department: a.department || "",
+      type: a.type || "",
+      status: a.status || "",
+      // Doctor col: doctor وإذا ما في، nurse (نتجاهل mode)
+      doctor: a.doctor || a.nurse || "",
+    });
+
+    return [...clinic, ...homeCare].map(normalize);
+  }, [apiData, activeTab]);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md px-4 py-5 font-['Cairo'] mt-0">
+    <div className="bg-white rounded-2xl shadow-md px-4 py-5 font-['Cairo'] mt-0 ">
       {/* Title + Tabs */}
       <div className="flex items-center justify-between mb-0">
         <h2 className="text-xl font-bold mb-4 px-1">Appointments</h2>
@@ -35,9 +67,13 @@ export default function AppointmentsCard() {
       </div>
 
       {/* Appointment List */}
-      <div className="space-y-3">
-        {appointments.length > 0 ? (
-          appointments.map((appointment, index) => (
+      <div className="space-y-3 overflow-y-auto h-[215px] no-scrollbar ">
+        {status == "loading" ? (
+          <div className="flex items-center w-full h-full justify-center">
+            <LogoLoader size={42} speed={1.2} />
+          </div>
+        ) : displayAppointments.length > 0 ? (
+          displayAppointments.map((appointment, index) => (
             <div
               key={index}
               className="bg-white rounded-xl border border-[#F3F4F6] px-5 py-2 text-sm text-gray-600 shadow-sm transform transition-transform duration-300 hover:scale-105"
@@ -50,22 +86,27 @@ export default function AppointmentsCard() {
                 <div className="text-xs text-gray-400 mb-1">Date</div>
                 <div>{appointment.date}</div>
               </div>
+
               <div className="font-semibold text-black">
                 <div className="text-xs text-gray-400 mb-1">Time</div>
                 <div>{appointment.time}</div>
               </div>
+
               <div className="font-semibold text-black">
                 <div className="text-xs text-gray-400 mb-1">Department</div>
                 <div className="font-bold">{appointment.department}</div>
               </div>
+
               <div className="font-semibold text-black">
                 <div className="text-xs text-gray-400 mb-1">Type</div>
                 <div>{appointment.type}</div>
               </div>
+
               <div className="font-semibold text-black">
                 <div className="text-xs text-gray-400 mb-1">Doctor</div>
                 <div>{appointment.doctor}</div>
               </div>
+
               <div className="font-semibold text-black">
                 <div className="text-xs text-gray-400 mb-1">Status</div>
                 <div className="flex items-center">

@@ -8,9 +8,6 @@ export default function BasicDeatails() {
   // const [selected, setSelected] = useState("option1");
   return (
     <div className="flex flex-col items-center justify-center w-full  ">
-      <div className="felx flex-col">
-        <UploadAvatar />
-      </div>
       <form className="w-11/12 " action="">
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 w-full ">
           {RegisterInputs({

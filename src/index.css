@@ -1,5 +1,3 @@
-
-
 @font-face {
   font-family: Cairo;
   src: url('./assets/fonts/Cairo/Cairo-Regular.ttf');
@@ -35,7 +33,18 @@
   --font-cairo: Cairo, "sans-serif"
 }
 
+@layer utilities {
 
+  /* أخفي سكرول كروم/سفاري/إيدج */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-
-
+  /* أخفي سكرول فايرفوكس و IE/Edge القديم */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and old Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}

@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 
-export default function PointsCards() {
+export default function PointsCards({ pointsD }) {
   const [points, setPoints] = useState(0);
 
   // Animate points count from 0 to 507
   useEffect(() => {
     let start = 0;
-    const end = 50;
+    const end = pointsD.sum_points;
     const duration = 900;
     const stepTime = Math.abs(Math.floor(duration / end));
     const timer = setInterval(() => {
+      if (end == 0) return 0;
       start += 1;
       setPoints(start);
       if (start === end) clearInterval(timer);
@@ -19,9 +20,9 @@ export default function PointsCards() {
   }, []);
 
   // Used vs total points
-  const used = 34;
-  const total = 50;
-  const percent = Math.round((used / total) * 100);
+  const used = pointsD.sum_point_replaced;
+  const total = pointsD.sum_points;
+  const percent = total == 0 ? 0 : Math.round((used / total) * 100);
 
   const data = [
     { name: "progress", value: percent },
@@ -31,17 +32,17 @@ export default function PointsCards() {
   const COLORS = ["#24A99CFF", "#E5E7EB"]; // teal + light gray
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between font-sans w-full max-w-[970px] mx-auto">
+    <div className="bg-white rounded-2xl shadow-md p-6  flex items-center justify-between font-sans w-full max-w-[970px] mx-auto">
       {/* Left Side - Total Points */}
       <div className="flex flex-col justify-between">
         <p className="text-gray-600 text-lg">Total Points Count</p>
-        <div className="flex items-baseline mt-4">
+        <div className="flex items-baseline mt-4 mb-5">
           <span className="text-6xl font-bold text-black">{points}</span>
           <span className="ml-2 text-[#972F6AFF] text-lg">Points</span>
         </div>
-        <p className="text-sm text-[#24A99CFF] mt-5">
+        {/* <p className="text-sm text-[#24A99CFF] mt-5">
           Last Updated in 19, Jun 2025
-        </p>
+        </p> */}
       </div>
 
       {/* Vertical Separator */}

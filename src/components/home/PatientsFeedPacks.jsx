@@ -51,7 +51,7 @@ export default function PatientsFeedPacks({ comments = [] }) {
                   </svg>
 
                   <p className="text-slate-700 font-cairo leading-relaxed flex-1">
-                    {f?.comment_en}
+                    {f?.comment}
                   </p>
 
                   <div className="mt-4 flex items-center gap-3">

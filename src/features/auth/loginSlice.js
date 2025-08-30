@@ -2,7 +2,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
 import axiosInstance from "../../config/axiosInstance";
-// import { toast } from "sonner";
+import axiosInstanceR from "../../config/axiosIntanceR";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (userInfo, thunkAPI) => {
@@ -19,6 +21,16 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const logOut = createAsyncThunk("user/logOut", async () => {
+  // لو عندك توكن لازم يتبعت: axiosInstanceR لازم يكون ضابط Authorization تلقائياً
+  const res = await axiosInstanceR.post("/logout");
+  // بعض الباك إند يرجّع الرسالة داخل data
+  const msg = res?.data?.message || "تم تسجيل الخروج بنجاح";
+  // امسح التوكن محلياً
+  localStorage.removeItem("token");
+  toast.success(msg);
+  return true;
+});
 const tokenFromStorage = localStorage.getItem("token");
 export const loginSlice = createSlice({
   name: "user",

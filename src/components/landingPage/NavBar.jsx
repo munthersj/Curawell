@@ -1,6 +1,7 @@
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useNavBar from "../../hooks/useNavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const { listIsClicked, setListIsClicked, showBar, setShowBar } = useNavBar();
@@ -37,7 +38,10 @@ export default function NavBar() {
       about: !listIsClicked.about,
     });
   }
-
+  const navigate = useNavigate();
+  const handleCLick = () => {
+    navigate("/login");
+  };
   function handleShowBar() {
     setShowBar(!showBar);
     if (showBar == true) {
@@ -125,40 +129,40 @@ export default function NavBar() {
                 <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-4  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
                     <li className="relative flex justify-center px-5  py-5 hover:shadow-2xs lg:bg-grayc md:bg-red hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
-                      <a
+                      <button
                         className="text-[16px] font-normal"
-                        href="#"
+                        onClick={handleCLick}
                         target="_blank"
                       >
                         First Service
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
+                      <button
                         className="text-[16px] font-normal"
-                        href="#"
+                        onClick={handleCLick}
                         target="_blank"
                       >
                         Second Service
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
+                      <button
                         className="text-[16px] font-normal"
-                        href="#"
+                        onClick={handleCLick}
                         target="_blank"
                       >
                         Third Service
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
-                      <a
+                      <button
                         className="text-[16px] font-normal"
-                        href="#"
+                        onClick={handleCLick}
                         target="_blank"
                       >
                         Fourth Service
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -181,40 +185,42 @@ export default function NavBar() {
                 <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-4  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
                     <li className="relative flex justify-center px-5 py-5 hover:shadow-2xs bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
-                      <a
+                      <button
+                        onClick={handleCLick}
                         className="text-[16px] font-normal"
-                        href="#"
+                        // href="#"
                         target="_blank"
                       >
                         First Clinics
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
+                      <button
+                        onClick={handleCLick}
                         className="text-[16px] font-normal"
-                        href="#"
+                        // href="#"
                         target="_blank"
                       >
                         Second Clinics
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
-                      <a
+                      <button
+                        onClick={handleCLick}
                         className="text-[16px] font-normal"
-                        href="#"
                         target="_blank"
                       >
                         Third Clinics
-                      </a>
+                      </button>
                     </li>
                     <li className="relative flex justify-center px-5 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
-                      <a
+                      <button
+                        onClick={handleCLick}
                         className="text-[16px] font-normal"
-                        href="#"
                         target="_blank"
                       >
                         Fourth Clinics
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -222,19 +228,19 @@ export default function NavBar() {
             </li>
             {/* Clincis */}
             {/* Our Team */}
-            <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300">
-              <div className="flex items-center ">
-                <span className="transition-all duration-300 mr-3">
+            {/* <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300"> */}
+            {/* <div className="flex items-center "> */}
+            {/* <span className="transition-all duration-300 mr-3">
                   Our Team
-                </span>
-                <div className="group-hover:rotate-90 group-hover:opacity-100 opacity-60 transition-all duration-300">
+                </span> */}
+            {/* <div className="group-hover:rotate-90 group-hover:opacity-100 opacity-60 transition-all duration-300">
                   <FontAwesomeIcon
                     icon="chevron-right"
                     style={{ fontSize: "16px" }}
                   />
-                </div>
-                <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div>
-                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-1  -bottom-[193.6px] group-hover:-bottom-[189.6px] bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
+                </div> */}
+            {/* <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div> */}
+            {/* <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute -left-1  -bottom-[193.6px] group-hover:-bottom-[189.6px] bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
                     <li className="relative flex justify-center px-5 py-5 hover:shadow-2xs bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
                       <a
@@ -264,9 +270,9 @@ export default function NavBar() {
                       </a>
                     </li>
                   </ul>
-                </div>
-              </div>
-            </li>
+                </div> */}
+            {/* </div> */}
+            {/* </li> */}
             {/* Our Team */}
             {/* About Us */}
             <li className="flex items-center lg:p-3 h-full text-xl relative group transition-all duration-300">
@@ -281,7 +287,7 @@ export default function NavBar() {
                   />
                 </div>
                 <div className="absolute left-0 top-0 h-1 w-0 bg-curawell transition-all duration-300 group-hover:w-full"></div>
-                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute left-0  -bottom-65 group-hover:-bottom-63 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
+                <div className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto absolute left-0  -bottom-65 group-hover:-bottom-15 bg-grayc flex justify-center items-center shadow-xl transition-all duration-300 ">
                   <ul className="flex flex-col w-full ">
                     <li className="relative flex justify-center px-8 py-5 hover:shadow-2xs bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell ">
                       <a
@@ -289,10 +295,10 @@ export default function NavBar() {
                         href="#"
                         target="_blank"
                       >
-                        Groups
+                        Contact US
                       </a>
                     </li>
-                    <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
+                    {/* <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap border-b border-curawell">
                       <a
                         className="text-[16px] font-normal"
                         href="#"
@@ -309,8 +315,8 @@ export default function NavBar() {
                       >
                         Begin
                       </a>
-                    </li>
-                    <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
+                    </li> */}
+                    {/* <li className="relative flex justify-center px-8 py-5 bg-grayc hover:bg-gray-100 transition-all duration-300 whitespace-nowrap">
                       <a
                         className="text-[16px] font-normal"
                         href="#"
@@ -318,7 +324,7 @@ export default function NavBar() {
                       >
                         Wishes
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -330,7 +336,7 @@ export default function NavBar() {
         {/* Nav List */}
         {/* Sign-up-Button */}
         <div className="hidden sm:flex w-1/6 justify-center items-center ">
-          <button className="sign-up-b ">
+          <button onClick={handleCLick} className="sign-up-b ">
             <span className="relative z-10">Sign up now </span>
           </button>
         </div>

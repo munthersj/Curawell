@@ -40,12 +40,12 @@ export default function CosmeticClinicsPage() {
     }
   }, [logic.status2, error, logic.message1]);
 
-  return logic.status == "loading" ? (
+  return logic.status == "loading" || logic.sectionData == undefined ? (
     <LogoLoader fullscreen size={140} speed={1.8} />
   ) : (
     <div className="flex flex-col ">
       <BookingPanel
-        imageSrc={"/public/images/cosmictic.png"}
+        imageSrc={"/images/cosmictic.png"}
         defaultClassNames={defaultClassNames}
         phone={logic.phone}
         setPhone={logic.setPhone}
@@ -83,8 +83,8 @@ export default function CosmeticClinicsPage() {
       />
       <CosmeticHeroSection
         title="Curawell Cosmetic Care"
-        details={"details"} // يمرّحلها نفس كائن details اللي عندك { details: "..." }
-        imageSrc="src/assets/cosmi.png" // أو استورد الصورة كـ import
+        details={logic.sectionData.details_services_en.brief_description} // يمرّحلها نفس كائن details اللي عندك { details: "..." }
+        imageSrc="/images/cosmi.png" // أو استورد الصورة كـ import
       />
       <KeyServicesSection
         keyServices={logic.keyServices}

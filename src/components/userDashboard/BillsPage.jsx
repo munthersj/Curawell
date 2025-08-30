@@ -6,20 +6,31 @@ import ClinicsTable from "./Bills/ClinicsTable";
 import HomeCareTable from "./Bills/HomeCareTable";
 import LabTable from "./Bills/LabTable";
 import RadioloTable from "./Bills/RadioloTable";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBillsData } from "../../features/data/dashboard/billsSlice";
+import { useEffect } from "react";
+import LogoLoader from "../LogoLoader";
 
 export default function BillsPage() {
   const [activeTab, setActiveTab] = useState("Clinics");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBillsData());
+  }, [dispatch]);
+
+  const { billsData, status } = useSelector((s) => s.billsData);
 
   const renderTable = () => {
     switch (activeTab) {
       case "Clinics":
-        return <ClinicsTable />;
+        return <ClinicsTable items={billsData?.clinic_bills ?? []} />;
       case "Home Care":
-        return <HomeCareTable />;
+        return <HomeCareTable items={billsData?.home_car_bills ?? []} />;
       case "Lab":
-        return <LabTable />;
+        return <LabTable items={billsData?.lab_bills ?? []} />;
       case "Radiology":
-        return <RadioloTable />;
+        return <RadioloTable items={billsData?.radiology_bills ?? []} />;
       default:
         return null;
     }
@@ -27,24 +38,26 @@ export default function BillsPage() {
 
   return (
     <div className="relative min-h-screen bg-[#F3F4F6] flex">
-      {/* Fixed Sidebar */}
       <SideBar />
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col ml-[225px] overflow-y-auto h-screen">
         <TopBar />
 
-        {/* Header */}
         <div className="px-6 py-4 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-black">Bills</h1>
         </div>
 
         {/* Summary Cards */}
-        <div className="px-6">
-          <PieChartCard />
-        </div>
+        {status === "loading" || !billsData ? (
+          <div className="flex items-center w-full h-full justify-center">
+            <LogoLoader size={42} speed={1.2} />
+          </div>
+        ) : (
+          <div className="px-6">
+            <PieChartCard billsData={billsData} status={status} />
+          </div>
+        )}
 
-        {/* Tabs Navigation */}
+        {/* Tabs */}
         <div className="mt-6 px-6">
           <div className="bg-white rounded-2xl shadow-sm p-1 flex space-x-2 w-fit">
             {["Clinics", "Home Care", "Lab", "Radiology"].map((tab) => (

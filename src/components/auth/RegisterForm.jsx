@@ -155,7 +155,7 @@ export default function RegisterForm() {
 
     if (newStep > 0 && newStep <= steps.length) {
       if (newStep == 2) {
-        // if (!validate()) return;
+        if (!validate()) return;
 
         setCurrents(newStep);
         console.log(registerData);

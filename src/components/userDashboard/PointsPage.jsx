@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../SideBar";
 import TopBar from "../TopBar";
 
+import LogoLoader from "../LogoLoader";
 import PointsCards from "./Points/PointsCards";
 import PointsHistory from "./Points/PointsHistory";
 import ExchangedPointsCard from "./Points/Modals/ExchangePointsModal";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPointData } from "../../features/data/dashboard/pointsSlice";
 export default function PointsPage() {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPointData());
+  }, [dispatch]);
+  const { pointsData, status } = useSelector((s) => s.pointsData);
+  console.log(pointsData);
   return (
     <div className="relative min-h-screen bg-[#F3F4F6] flex">
       {/* Fixed Sidebar */}
@@ -29,15 +36,25 @@ export default function PointsPage() {
           </button>
         </div>
 
-        {/* Summary Cards */}
-        <div className="px-6">
-          <PointsCards />
-        </div>
+        {status == "loading" ? (
+          <div className="flex items-center w-full h-full justify-center">
+            <LogoLoader size={42} speed={1.2} />
+          </div>
+        ) : (
+          <>
+            <div className="px-6">
+              <PointsCards pointsD={pointsData} />
+            </div>
 
-        {/* Point Rows */}
-        <div className="mt-6 px-6 space-y-4">
-          <PointsHistory />
-        </div>
+            <div className="mt-6 px-6 space-y-4">
+              <PointsHistory
+                pointsD={pointsData.points}
+                pointsE={pointsData.points_replaced}
+                status={status}
+              />
+            </div>
+          </>
+        )}
       </div>
 
       {/* Modal */}

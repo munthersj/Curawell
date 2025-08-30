@@ -9,6 +9,11 @@ import landinPageReducer from "./features/data/landingPageSlice";
 import clinicReducer from "./features/data/clinicsSlice";
 import cosmeticReducer from "./features/data/cosmeticSlice";
 import navBarReducer from "./features/data/navBarSlice";
+import dashBoardReducer from "./features/data/dashboard/dashBoardSlice";
+import appointmentsReducer from "./features/data/dashboard/appointmentsSlice";
+import documentsReducer from "./features/data/dashboard/documentsSlice";
+import pointsReducer from "./features/data/dashboard/pointsSlice";
+import billsReducer from "./features/data/dashboard/billsSlice";
 export default configureStore({
   reducer: {
     login: loginReducer,
@@ -21,5 +26,10 @@ export default configureStore({
     clinicsData: clinicReducer,
     cosmeticData: cosmeticReducer,
     navBarData: navBarReducer,
+    dashBoardData: dashBoardReducer,
+    appointmentsData: appointmentsReducer,
+    documentsData: documentsReducer,
+    pointsData: pointsReducer,
+    billsData: billsReducer,
   },
 });
