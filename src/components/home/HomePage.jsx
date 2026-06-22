@@ -52,7 +52,9 @@ export default function HomePage() {
   return status1 == "loading" || status == "loading" ? (
     <LogoLoader fullscreen size={140} speed={1.8} />
   ) : (
-    <div className="flex flex-col  ">
+    <div className="flex flex-col items-center  ">
+      <NavBar />
+
       <AbsoiluteDiv data={sections} />
       <SpecializedSlider
         prevSlide={prevSlide}

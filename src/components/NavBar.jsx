@@ -123,7 +123,7 @@ export default function NavBar() {
         </div>
         {/* LOGO */}
         {/* -------Mobile-Section------- */}
-        <div className="flex sm:hidden justify-center items-center font-bold text-2xl">
+        <div className="flex w-auto  sm:hidden justify-center items-center font-bold text-2xl">
           <span>Curawell</span>
         </div>
         {/* -------Mobile-Section------- */}

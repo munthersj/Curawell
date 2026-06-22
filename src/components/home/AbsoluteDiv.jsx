@@ -33,13 +33,13 @@ export default function AbsoiluteDiv({ data }) {
   return (
     <div className="flex flex-col justify-center relative w-full mt-10 sm:mt-0 ">
       <img
-        className="w-full h-auto object-cover"
+        className="w-full h-auto sm:h-[550px] object-cover"
         src="src/assets/home.png"
         alt="1"
       />
 
       {/* Small Container Over Image */}
-      <div className="sm:absolute  sm:bottom-0 sm:left-1/2 sm:-translate-x-1/2 sm:translate-y-1/2 w-screen sm:w-7/12 bg-grayc text-black px-4 sm:px-8 pt-5 sm:pt-7 pb-6 rounded-lg shadow-lg">
+      <div className="sm:absolute  sm:bottom-10 sm:left-1/2 sm:-translate-x-1/2 sm:translate-y-1/2 w-screen sm:w-7/12 bg-grayc text-black px-4 sm:px-8 pt-5 sm:pt-7 pb-6 rounded-lg shadow-lg">
         {/* First Row */}
         <div className="flex flex-row items-start sm:items-center justify-between w-full gap-4">
           <h1 className="text-2xl sm:text-3xl font-cairo font-bold">

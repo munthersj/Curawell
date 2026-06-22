@@ -67,20 +67,6 @@ export default function Step1ServiceCard({
             );
           })
         )}
-
-        {/* 
-        <div
-          onClick={() => {
-            setSelectedService(clinics.homeCare_id);
-            // setIsHomeCare(true);
-          }}
-          className={`flex items-center justify-center py-4 px-4 rounded-xl cursor-pointer transition-transform transform 
-                  ${"bg-white hover:scale-x-98 hover:scale-y-110 hover:shadow-xl"}`}
-        >
-          <p className={`font-medium text-xl ${"text-[#922D66FF]"}`}>
-            Home Care
-          </p>
-        </div> */}
       </div>
 
       {/* style to hide scrollbar */}

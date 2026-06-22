@@ -10,7 +10,6 @@ export default function ProtectedRoutes() {
   const existToken = !token ? false : true;
   return existToken ? (
     <>
-      <NavBar />
       <Outlet />
       <CurwellFooter />
     </>

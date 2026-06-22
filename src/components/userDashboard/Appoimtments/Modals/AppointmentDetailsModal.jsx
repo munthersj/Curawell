@@ -110,11 +110,11 @@ export default function AppointmentDetailsModal({
               <p className="text-gray-900 font-medium">{appointment.doctor}</p>
 
               {/* فواتير ثابتة من تصميمك الحالي */}
-              <p className="text-gray-500">Bill</p>
+              {/* <p className="text-gray-500">Bill</p>
               <p className="text-gray-900 font-medium">50,000 sp</p>
 
               <p className="text-gray-500">Paid Bill</p>
-              <p className="text-gray-900 font-medium">50,000 sp</p>
+              <p className="text-gray-900 font-medium">50,000 sp</p> */}
             </div>
           </div>
 
